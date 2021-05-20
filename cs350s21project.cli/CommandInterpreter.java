@@ -1,4 +1,3 @@
-//Thi
 import cs350s21project.controller.CommandManagers;
 import cs350s21project.controller.command.A_Command;
 
@@ -22,9 +21,6 @@ public class CommandInterpreter {
         String buildCommand = "//" + input;
 
         A_Command nc = new A_Command(newManager, buildCommand) {
-            //insert functionality
-            //the steps are wrapped in the object
-            //when the object
             @Override
             public void execute() {
                 System.out.println("hello world");
