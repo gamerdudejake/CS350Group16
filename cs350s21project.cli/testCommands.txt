@@ -1,0 +1,5 @@
+define sensor depth FUZE_DEPTH1 with trigger depth -250
+define munition depth_charge MUNITION_DEPTHCHARGE1 with fuze FUZE_DEPTH1
+
+
+set MY_SHIP1 speed 25
