@@ -12,6 +12,7 @@ public class ParserTester {
         int i = 1;
         int j = 2;
         while(i < j) {
+            System.out.println("\nPlease enter command (then hit enter):");
             Parser parser = new Parser();
             parser.runParser();
         }
