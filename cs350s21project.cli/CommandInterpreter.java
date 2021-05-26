@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 public class CommandInterpreter {
     public static void main(String[] args) {
+
+
+
         CommandInterpreter ref = new CommandInterpreter();
         Scanner rf = new Scanner(System.in);
         String f = rf.nextLine();
