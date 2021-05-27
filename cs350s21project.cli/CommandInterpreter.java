@@ -13,6 +13,7 @@ public class CommandInterpreter {
         Scanner rf = new Scanner(System.in);
         String onStart = rf.nextLine();
 
+        System.out.println("Please type the word: run in the console to launch app.");
         if(onStart.equalsIgnoreCase("run")) {
             CmdInterpartor.evaluate("hello");
         }
@@ -42,7 +43,6 @@ public class CommandInterpreter {
                 getCommandText();
             }
         };
-
 
         newCommand.getCommandText();
         CommandManagers.getInstance().schedule(newCommand);
