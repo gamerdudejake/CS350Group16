@@ -1,12 +1,15 @@
+package cs350s21project.cli;
+
 import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.HashSet;
 
-
+//TESTER FOR THE PARSER DELETE ONCE INTEGRATED.
 public class ParserTester {
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
 
+*//*
         // !!!THIS LOOP DOESNT END FOR TESTING, YOU WILL NEED TO MANUALLY END IT!!!!
 
         int i = 1;
@@ -17,5 +20,6 @@ public class ParserTester {
             parser.runParser();
         }
     }
+*/
 
 }
