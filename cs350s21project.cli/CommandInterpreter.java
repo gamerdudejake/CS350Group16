@@ -33,14 +33,12 @@ public class CommandInterpreter {
 
         A_Command newCommand = new A_Command(newManager, input)
         {
-
             //when a value is passed into the evaluate via
             @Override
             public void execute()
             {
                 //need to pass in the input from a new command into the parser
                 parser.runParser(input);
-                getCommandText();
             }
         };
 

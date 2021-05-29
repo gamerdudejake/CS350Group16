@@ -1,5 +1,10 @@
 // I. VIEWS
 // needs clarification from Luis first
+// 1. create window id top view with size (latitude1 latitude2 latitude3) (longitude1 longitude2 longitude3)
+create window id1 top view with size (4 2 1) (6 123 0)
+
+//4. delete window id
+delete window id1
 
 
 // II. ACTORS
@@ -70,7 +75,6 @@ define sensor distance id1 with trigger distance 48
 
 // 8. define sensor time id with trigger time time
 define sensor time id with trigger time 74
-
 
 // VII. MISCELLANEOUS
 // 1. @load filename
