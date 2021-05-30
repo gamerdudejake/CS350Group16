@@ -20,9 +20,8 @@ public class View {
     //note I guess can't have same id for two different views.
     public void launchAllWindows()
     {
+
         AgentID idTop = createNewAgentID("TopView");
-        AgentID idFront = createNewAgentID("FrontView");
-        AgentID idSide = createNewAgentID("SideView");
         CommandManagers windowManager = new CommandManagers();
 
         Latitude latitudeOrigin = new Latitude(2, 4, 1.00);
@@ -32,14 +31,7 @@ public class View {
         Longitude longitudeExtent = new Longitude(2, 4, 1.00);
         Longitude longitudeInterval = new Longitude(2, 4, 1.00);
 
-        Altitude altitudeOrigin = buildAltitudeCoordinate(3.00);
-        Altitude altitudeExtent = buildAltitudeCoordinate(3.00);
-        Altitude altitudeAGLInterval = buildAltitudeCoordinate(3.00);
-        Altitude altitudeBGLInterval = buildAltitudeCoordinate(3.00);
-
         buildTopView(idTop, windowManager, latitudeOrigin, latitudeExtent, latitudeInterval, longitudeOrigin, longitudeExtent, longitudeInterval);
-        buildFrontView(idFront, windowManager, longitudeOrigin, longitudeExtent, longitudeInterval, altitudeOrigin, altitudeExtent, altitudeAGLInterval, altitudeBGLInterval);
-        buildSideView(idSide, windowManager, latitudeOrigin, latitudeExtent, latitudeInterval, altitudeOrigin, altitudeExtent,altitudeAGLInterval, altitudeBGLInterval);
     }
 
     public void buildTopView(AgentID idWindow, CommandManagers windowManager, Latitude latitudeOrigin, Latitude latitudeExtent, Latitude latitudeInterval,
@@ -47,7 +39,7 @@ public class View {
     {
         //window sizing and name setup
         String windowName = "TopView";
-        int size = 1920;
+        int size = 1920 * 1080;
 
         //building
         CommandViewCreateWindowTop TopWindow = new CommandViewCreateWindowTop(windowManager, windowName, idWindow, size, latitudeOrigin, latitudeExtent,
@@ -55,35 +47,7 @@ public class View {
 
         //execute Window
         TopWindow.execute();
-    }
-
-    public void buildFrontView(AgentID idWindow, CommandManagers windowManager, Longitude longitudeOrigin, Longitude longitudeExtent, Longitude longitudeInterval,
-                               Altitude altitudeOrigin, Altitude altitudeExtent, Altitude altitudeAGLInterval, Altitude altitudeBGLInterval)
-    {
-        //window sizing and name setup
-        String windowName = "FrontView";
-        int size = 1920;
-
-        //building
-        CommandViewCreateWindowFront frontWindow = new CommandViewCreateWindowFront(windowManager, windowName, idWindow, size,
-                longitudeOrigin, longitudeExtent, longitudeInterval, altitudeOrigin, altitudeExtent, altitudeAGLInterval, altitudeBGLInterval);
-
-        //execute Window
-        frontWindow.execute();
-    }
-
-    public void buildSideView(AgentID idWindow, CommandManagers windowManager, Latitude latitudeOrigin, Latitude latitudeExtent, Latitude latitudeInterval,
-                              Altitude altitudeOrigin, Altitude altitudeExtent, Altitude altitudeAGLInterval, Altitude altitudeBGLInterval)
-    {
-        //window sizing in pixels and name setup
-        String windowName = "SideView";
-        int size = 1920;
-        //building
-        CommandViewCreateWindowSide sideWindow = new CommandViewCreateWindowSide(windowManager, windowName, idWindow, size, latitudeOrigin, latitudeExtent,
-                latitudeInterval, altitudeOrigin, altitudeExtent, altitudeAGLInterval, altitudeBGLInterval);
-
-        //execute Window
-        sideWindow.execute();
+        System.out.println("The buildTopView method has been invoked.");
     }
 
     //temporary methods utilized for displaying what makes a latitude, longitude, and altitude object.
@@ -118,18 +82,5 @@ public class View {
     {
         CommandViewDeleteWindow deleteWindow = new CommandViewDeleteWindow(windowManager, text, windowId);
         deleteWindow.execute();
-    }
-
-    public void unlockWindow(AgentID windowId, String text, CommandManagers windowManager)
-    {
-        CommandViewUnlockWindow unlockWindow = new CommandViewUnlockWindow(windowManager, text, windowId);
-        unlockWindow.execute();
-    }
-
-    //utilizes two id's which are the windowId and an actorID like munitions.
-    public void lockWindow(AgentID windowId, String text, CommandManagers windowManager, AgentID actorID)
-    {
-        CommandViewLockWindow lockWindow = new CommandViewLockWindow(windowManager, text, windowId, actorID);
-        lockWindow.execute();
     }
 }

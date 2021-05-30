@@ -1,5 +1,10 @@
 package cs350s21project.cli;
 
+import cs350s21project.controller.CommandManagers;
+import cs350s21project.datatype.AgentID;
+import cs350s21project.datatype.Latitude;
+import cs350s21project.datatype.Longitude;
+
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,39 +13,44 @@ import java.util.Scanner;
 
 public class Parser {
     // Custom Variables, not called for in specs
-    String command;
-    HashSet<String> keyWords = new HashSet<>();
-    String userInput;
-    String[] words;
-    String fileName;
+    private CommandManagers windowManager = new CommandManagers();
+    private String command;
+    private HashSet<String> keyWords = new HashSet<>();
+    private String userInput;
+    private String[] words;
+    private String fileName;
 
     // Universal Variables
-    String id;
-    String id2;
-    String id3;
-    ArrayList<String> idN;
+    private String id;
+    private String id2;
+    private String id3;
+    private ArrayList<String> idN;
 
     // Views Variables
-    int size;
-    String latitude; // TODO: datatype will be Latitude 45*30'15"
-    String longitude; // TODO: datatype will be Longitude 110*30'10.3"
+    private int size;
+    private Latitude latitudeOrigin = new Latitude(2, 4, 1.00);
+    private Latitude latitudeExtent = new Latitude(2, 4, 1.00);
+    private Latitude latitudeInterval = new Latitude(2, 4, 1.00);
+    private Longitude longitudeOrigin = new Longitude(2, 4, 1.00);
+    private Longitude longitudeExtent = new Longitude(2, 4, 1.00);
+    private Longitude longitudeInterval = new Longitude(2, 4, 1.00);
 
     // Actors variables
-    int coordinates; // TODO: datatype will be CoordinateWorld3D 45*30'15"/110*30'10"/200
-    int course; // TODO: datatype will be Course 090
-    int speed; // TODO: datatype will be Groundspeed 25
-    int altitude; // TODO: datatype will be Altitude 1000
+    private int coordinates; // TODO: datatype will be CoordinateWorld3D 45*30'15"/110*30'10"/200
+    private int course; // TODO: datatype will be Course 090
+    private int speed; // TODO: datatype will be Groundspeed 25
+    private int altitude; // TODO: datatype will be Altitude 1000
 
     // Munitions Variables
-    double time;// TODO: datatype will be Time 10.8
-    double distance; // TODO: datatype will be DistanceNauticalMiles 25.3
-    double azimuth; // TODO: datatype will be AttitudeYaw 10
-    double elevation; // TODO: datatype will be AttitudePitch 25
+    private double time;// TODO: datatype will be Time 10.8
+    private double distance; // TODO: datatype will be DistanceNauticalMiles 25.3
+    private double azimuth; // TODO: datatype will be AttitudeYaw 10
+    private double elevation; // TODO: datatype will be AttitudePitch 25
 
     // Sensors/Fuzes Variables
-    double fov;// TODO: datatype will be FieldOfView 10
-    double power;// TODO: datatype will be Power 10
-    double sensitivity;// TODO: datatype will be Sensitivity 10
+    private double fov;// TODO: datatype will be FieldOfView 10
+    private double power;// TODO: datatype will be Power 10
+    private double sensitivity;// TODO: datatype will be Sensitivity 10
     // altitude // already used in Actor
     // distance
     // time
@@ -108,12 +118,16 @@ public class Parser {
                     // TODO: NICK - parse out variables // needs clarification from Luis first
                     System.out.println("Use CommandViewCreateWindowTop");
                     // TODO: Use CommandViewCreateWindowTop
+                    launchTopView(windowManager);
+
                     break;
                 case "delete":
                     // delete window id
                     // TODO: NICK - parse out variables // needs clarification from Luis first
                     System.out.println("Use CommandViewDeleteWindow");
                     // TODO: Use CommandViewDeleteWindow
+                    View newView = new View();
+                    newView.deleteWindow(newView.createNewAgentID("tpId"), "bye", windowManager);
                     break;
             }
         }
@@ -460,4 +474,17 @@ public class Parser {
         keyWords.add("window");
         keyWords.add("with");
     }
+
+//-----------------------------------Separate Class Launching Methods---------------------------//
+public void launchTopView(CommandManagers windowManager)
+{
+
+    View tpView = new View();
+    AgentID tpID = tpView.createNewAgentID("tpId");
+
+    tpView.buildTopView(tpID, windowManager, latitudeOrigin, latitudeExtent, latitudeInterval, longitudeOrigin, longitudeExtent, longitudeInterval);
+}
+//-----------------------------------Separate Command Parsing Methods---------------------------//
+
+
 }
