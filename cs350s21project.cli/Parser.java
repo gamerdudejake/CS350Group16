@@ -120,23 +120,13 @@ public class Parser {
                     // TODO: NICK - parse out variables // needs clarification from Luis first
                     System.out.println("Use CommandViewCreateWindowTop");
                     // TODO: Use CommandViewCreateWindowTop
-                    launchTopView(windowManager);
                     break;
                 case "delete":
                     // delete window id
-                    String window = this.words[1];
-                    String id = this.words[2];
-                    System.out.println("The command passed in was " + this.words[0] + " " + window + " With ID having:" + id);
+                    // TODO: NICK - parse out variables // needs clarification from Luis first
+                    System.out.println("Use CommandViewDeleteWindow");
                     // TODO: Use CommandViewDeleteWindow
-
-                   // View newView = new View();
-                    //newView.deleteWindow(newView.createNewAgentID("tpId"), "bye", windowManager);
                     break;
-                case "set altitude":
-                    System.out.println("You've chosen to set altitude");
-                    break;
-                case "set longitude":
-                    System.out.println("You've chosen to set longitude");
             }
         }
     }
@@ -198,7 +188,7 @@ public class Parser {
 
     public void munitions() {
         // III. MUNITIONS
-        if (this.words[1].equals("munition") || this.words[3].equals("munition")) {
+        if (this.words[1].equals("munition")) {
             // define
             switch(this.words[2]) {
                 case "bomb":
