@@ -6,15 +6,15 @@ import cs350s21project.datatype.Latitude;
 import cs350s21project.datatype.Longitude;
 
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Parser {
+    //Views specific custom data strucs and variables.
+    private int[] longitudes = new int[3];
+    private int[] altitudes =  new int[3];
+
     // Custom Variables, not called for in specs
     private CommandManagers windowManager = new CommandManagers();
-    private String command;
     private HashSet<String> keyWords = new HashSet<>();
     private String userInput;
     private String[] words;
@@ -57,6 +57,8 @@ public class Parser {
 
     public void runParser(String command) {
         //command is the string passed in via the application gui
+        // Arrays.fill(this.altitudes, Integer.MIN_VALUE);
+        //Arrays.fill(this.longitudes, Integer.MIN_VALUE);
         this.userInput = command;
         loadKeyWords();
         parseInput();
@@ -119,16 +121,22 @@ public class Parser {
                     System.out.println("Use CommandViewCreateWindowTop");
                     // TODO: Use CommandViewCreateWindowTop
                     launchTopView(windowManager);
-
                     break;
                 case "delete":
                     // delete window id
-                    // TODO: NICK - parse out variables // needs clarification from Luis first
-                    System.out.println("Use CommandViewDeleteWindow");
+                    String window = this.words[1];
+                    String id = this.words[2];
+                    System.out.println("The command passed in was " + this.words[0] + " " + window + " With ID having:" + id);
                     // TODO: Use CommandViewDeleteWindow
-                    View newView = new View();
-                    newView.deleteWindow(newView.createNewAgentID("tpId"), "bye", windowManager);
+
+                   // View newView = new View();
+                    //newView.deleteWindow(newView.createNewAgentID("tpId"), "bye", windowManager);
                     break;
+                case "set altitude":
+                    System.out.println("You've chosen to set altitude");
+                    break;
+                case "set longitude":
+                    System.out.println("You've chosen to set longitude");
             }
         }
     }
