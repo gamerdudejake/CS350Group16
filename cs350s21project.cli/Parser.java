@@ -1,3 +1,5 @@
+package cs350s21project.cli;
+
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,9 +45,10 @@ public class Parser {
     // distance
     // time
 
-    public void runParser() {
+    public void runParser(String command) {
+        //command is the string passed in via the application gui
+        this.userInput = command;
         loadKeyWords();
-        getUserInput();
         parseInput();
         compareToKeyWords();
         determineCommand();
@@ -72,10 +75,13 @@ public class Parser {
         this.idN = tempIDN;
     }
 
-    public void getUserInput() {
+//Code commented out because we aren't going to be taking in via scanner.
+/*    public void getUserInput() {
         Scanner scanner = new Scanner(new InputStreamReader(System.in));
+
+        //passing in the user command into a user input object.
         this.userInput = scanner.nextLine();
-    }
+    }*/
 
     public void parseInput() {
         this.words = this.userInput.split(" ");
@@ -391,7 +397,6 @@ public class Parser {
         keyWords.add("@wait");
         keyWords.add("@force");
         keyWords.add("@exit");
-
         keyWords.add("acoustic");
         keyWords.add("active");
         keyWords.add("actor");
