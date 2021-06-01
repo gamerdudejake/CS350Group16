@@ -10,11 +10,11 @@ import java.util.*;
 
 public class Parser {
     //Views specific custom data strucs and variables.
-    private int[] longitudes = new int[3];
-    private int[] altitudes =  new int[3];
+    private Longitude[] longitudes = new Longitude[3];
+    private Latitude[] latitudes =  new Latitude[3];
 
     // Custom Variables, not called for in specs
-    private CommandManagers windowManager = new CommandManagers();
+    private CommandManagers universalWindowManager = new CommandManagers();
     private HashSet<String> keyWords = new HashSet<>();
     private String userInput;
     private String[] words;
@@ -27,6 +27,7 @@ public class Parser {
     private ArrayList<String> idN;
 
     // Views Variables
+    View newView = new View();
     private int size;
     private Latitude latitudeOrigin = new Latitude(2, 4, 1.00);
     private Latitude latitudeExtent = new Latitude(2, 4, 1.00);
@@ -57,8 +58,6 @@ public class Parser {
 
     public void runParser(String command) {
         //command is the string passed in via the application gui
-        // Arrays.fill(this.altitudes, Integer.MIN_VALUE);
-        //Arrays.fill(this.longitudes, Integer.MIN_VALUE);
         this.userInput = command;
         loadKeyWords();
         parseInput();
@@ -114,18 +113,31 @@ public class Parser {
     public void views() {
         // I. VIEWS
         if (this.words[1].equals("window")) {
+
             switch(this.words[0]) {
                 case "create":
                     // create window id top view with size (latitude1 latitude2 latitude3) (longitude longitude2 longitude3)
-                    // TODO: NICK - parse out variables // needs clarification from Luis first
-                    System.out.println("Use CommandViewCreateWindowTop");
-                    // TODO: Use CommandViewCreateWindowTop
+
+                    //catching.
+
+                    //converting input to params for the method being invoked.
+
+                    //invoking the delete method.
+
+
                     break;
                 case "delete":
-                    // delete window id
-                    // TODO: NICK - parse out variables // needs clarification from Luis first
-                    System.out.println("Use CommandViewDeleteWindow");
-                    // TODO: Use CommandViewDeleteWindow
+                    // delete window id testing out the word catcher.
+                    String window = this.words[1];
+                    String id = this.words[2];
+
+                    //converting to params for the methods being invoked.
+                    AgentID convertedId = newView.createNewAgentID(id);
+                    String text = "The window with id: " + id + " has been deleted";
+
+                    //invoking the delete method.
+                    System.out.println("The command passed in was " + this.words[0].toUpperCase() + " " + window.toUpperCase() + " With ID having: " + id.toUpperCase());
+                    newView.deleteWindow(convertedId, text, this.universalWindowManager);
                     break;
             }
         }
@@ -155,7 +167,7 @@ public class Parser {
         }
         else if (this.words[0].equals("set") &&
                 (this.words[2].equals("course") || this.words[2].equals("speed")
-                        || this.words[2].equals("depth") || this.words[2].equals("altitude"))) {
+                        || this.words[2].equals("depth") || this.words[2].equals("altitude")|| this.words[2].equals("longitude"))) {
             switch(this.words[2]) {
                 case "course":
                     // set id course course
@@ -181,6 +193,56 @@ public class Parser {
                     System.out.println("Use CommandActorSetAltitudeDepth");
                     System.out.println("Variables: ID: " + this.id + " Altitude: " + this.altitude);
                     // TODO: Use CommandActorSetAltitudeDepth
+                    break;
+                case "longitude":
+                    //TODO: make sure to remove the question mark and replace it with a single quote for checking minutes.
+                    //TODO: have to make a few edits to converting from string to doubles but working just needs to be duplicated for altitude as well.
+                    //set positionInArray longitude degrees*minutes'seconds"
+                    System.out.println("Set longitude has been invoked.");
+                    //catching.
+                    int arrayPos = Integer.parseInt(this.words[1]);
+                    String coordinatePreParse = this.words[3];
+
+                    System.out.println("The passed in command is: " + arrayPos +" "+ coordinatePreParse);
+                    //converting input to params for the method being invoked.
+                    StringBuilder degrees = new StringBuilder();
+                    StringBuilder minutes = new StringBuilder();
+                    StringBuilder seconds = new StringBuilder();
+                    boolean deg = false;
+                    boolean min = false;
+                    boolean sec = false;
+
+                    for(int i =0; i < coordinatePreParse.length(); i++)
+                    {
+                        if(coordinatePreParse.charAt(i) != '*' && !deg)
+                        {
+                            degrees.append(coordinatePreParse.charAt(i));
+                        }else if(coordinatePreParse.charAt(i) == '*')
+                        {
+                            deg = true;
+                        }
+
+                        else if(coordinatePreParse.charAt(i) != '?' && !min)
+                        {
+                            minutes.append(coordinatePreParse.charAt(i));
+                        }else if(coordinatePreParse.charAt(i) == '?')
+                        {
+                            min = true;
+                        }
+
+                        else if(coordinatePreParse.charAt(i) != '"' && !sec)
+                        {
+                            seconds.append(coordinatePreParse.charAt(i));
+                        }else if(coordinatePreParse.charAt(i) == '"')
+                        {
+                            sec = true;
+                        }
+                    }
+                    System.out.println(degrees.toString() +" "+ minutes.toString() +" "+ seconds.toString());
+                    //invoking the method to set a longitude variable.
+                    Longitude newLongitude = new Longitude(Integer.parseInt(degrees.toString()),Integer.parseInt(minutes.toString()), Double.parseDouble(seconds.toString()));
+                    longitudes[arrayPos] = newLongitude;
+                    System.out.println("The longitude at position: " + arrayPos + "has been updated to " + newLongitude.toString());
                     break;
             }
         }
