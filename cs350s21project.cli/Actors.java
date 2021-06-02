@@ -39,4 +39,17 @@ public class Actors {
         CommandActorSetAltitudeDepth setAltitudeDepth = new CommandActorSetAltitudeDepth(managers, text, idActor, altitude);
         setAltitudeDepth.execute();
     }
+
+    //------Misc----------
+    //before creating a new coordinateWorld3D we need to create coordinate world object.
+    public void createCoordinateWorld3D(CoordinateWorld coordinateWorld, Altitude altitude)
+    {
+        CoordinateWorld3D newCorWorld = new CoordinateWorld3D(coordinateWorld, altitude);
+    }
+
+    //requires a Latitude object and a Longitude object.
+    public CoordinateWorld createCoordinateWorldObj(Latitude latitude, Longitude longitude)
+    {
+        return new CoordinateWorld(latitude, longitude);
+    }
 }
