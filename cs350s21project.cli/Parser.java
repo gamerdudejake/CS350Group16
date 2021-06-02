@@ -110,43 +110,47 @@ public class Parser {
         }
     }
 
+    //ToDo: Views parser working needs further testing -lg
     public void views() {
         // I. VIEWS
         if (this.words[1].equals("window")) {
-
+        //create window wTop top view with 200 (49*39'32# 0*10'0# 0*0'30#) (117*25'30# 0*10'0# 0*0'30#)
             switch(this.words[0]) {
                 case "create":
-                    // create window id top view with size (latitude1 latitude2 latitude3) (longitude longitude2 longitude3)
-                    System.out.println("Stop");
-                    //catching.
-                    String id = words[2];
-                    int size = Integer.parseInt(words[6]);
-                    String latitude1 = words[7];
-                    String latitude2 = words[8];
-                    String latitude3 = words[9];
+                    if(words[3].equals("top")) {
+                        View newView = new View();
+                        // create window id top view with size (latitude1 latitude2 latitude3) (longitude longitude2 longitude3)
+                        System.out.println("Stop");
+                        //catching.
+                        AgentID id = newView.createNewAgentID(words[2]);
+                        int size = Integer.parseInt(words[6]);
 
-                    String longitude1 = words[10];
-                    String longitude2 = words[11];
-                    String longitude3 = words[12];
+                        //converting input to params for the method being invoked.
+                        Latitude latitude1 = newView.parseLatitudeString(words[7]);
+                        Latitude latitude2 = newView.parseLatitudeString(words[8]);
+                        Latitude latitude3 = newView.parseLatitudeString(words[9]);
 
-                    //converting input to params for the method being invoked.
+                        Longitude longitude1 = newView.parseLongitudeString(words[10]);
+                        Longitude longitude2 = newView.parseLongitudeString(words[11]);
+                        Longitude longitude3 = newView.parseLongitudeString(words[12]);
 
-                    //invoking the delete method.
-
-
+                        //invoking the create top method.
+                        newView.buildTopView(id, universalWindowManager, size, latitude1, latitude2, latitude3, longitude1, longitude2, longitude3);
+                    }
                     break;
                 case "delete":
                     // delete window id testing out the word catcher.
                     String window = this.words[1];
-                    id = this.words[2];
+
+                    newView = new View();
+                    AgentID id = newView.createNewAgentID(this.words[2]);
 
                     //converting to params for the methods being invoked.
-                    AgentID convertedId = newView.createNewAgentID(id);
-                    String text = "The window with id: " + id + " has been deleted";
+                    String text = "The window with id: " + id.toString() + " has been deleted";
 
                     //invoking the delete method.
-                    System.out.println("The command passed in was " + this.words[0].toUpperCase() + " " + window.toUpperCase() + " With ID having: " + id.toUpperCase());
-                    newView.deleteWindow(convertedId, text, this.universalWindowManager);
+                    newView.deleteWindow(id, text, this.universalWindowManager);
+                    System.out.println("The window "+id.toString()+" has been deleted.");
                     break;
             }
         }
@@ -495,14 +499,7 @@ public class Parser {
     }
 
 //-----------------------------------Separate Class Launching Methods---------------------------//
-public void launchTopView(CommandManagers windowManager)
-{
 
-    View tpView = new View();
-    AgentID tpID = tpView.createNewAgentID("tpId");
-
-    tpView.buildTopView(tpID, windowManager, latitudeOrigin, latitudeExtent, latitudeInterval, longitudeOrigin, longitudeExtent, longitudeInterval);
-}
 //-----------------------------------Separate Command Parsing Methods---------------------------//
 
 

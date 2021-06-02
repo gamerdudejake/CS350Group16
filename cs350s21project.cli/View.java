@@ -33,15 +33,13 @@ public class View {
         Longitude longitudeExtent = new Longitude(2, 4, 1.00);
         Longitude longitudeInterval = new Longitude(2, 4, 1.00);
 
-        buildTopView(idTop, windowManager, latitudeOrigin, latitudeExtent, latitudeInterval, longitudeOrigin, longitudeExtent, longitudeInterval);
     }
 
-    public void buildTopView(AgentID idWindow, CommandManagers windowManager, Latitude latitudeOrigin, Latitude latitudeExtent, Latitude latitudeInterval,
+    public void buildTopView(AgentID idWindow, CommandManagers windowManager, int size, Latitude latitudeOrigin, Latitude latitudeExtent, Latitude latitudeInterval,
                              Longitude longitudeOrigin, Longitude longitudeExtent, Longitude longitudeInterval)
     {
         //window sizing and name setup
         String windowName = "TopView";
-        int size = 1920 * 1080;
 
         //building
         CommandViewCreateWindowTop TopWindow = new CommandViewCreateWindowTop(windowManager, windowName, idWindow, size, latitudeOrigin, latitudeExtent,
