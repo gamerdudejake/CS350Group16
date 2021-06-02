@@ -1,5 +1,4 @@
 package cs350s21project.cli;
-
 import cs350s21project.controller.CommandManagers;
 import cs350s21project.controller.command.actor.CommandActorCreateActor;
 import cs350s21project.controller.command.actor.CommandActorDefineShip;
