@@ -5,8 +5,8 @@ import cs350s21project.datatype.AgentID;
 import cs350s21project.datatype.Latitude;
 import cs350s21project.datatype.Longitude;
 
-import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Parser {
     //Views specific custom data strucs and variables.
@@ -117,8 +117,17 @@ public class Parser {
             switch(this.words[0]) {
                 case "create":
                     // create window id top view with size (latitude1 latitude2 latitude3) (longitude longitude2 longitude3)
-
+                    System.out.println("Stop");
                     //catching.
+                    String id = words[2];
+                    int size = Integer.parseInt(words[6]);
+                    String latitude1 = words[7];
+                    String latitude2 = words[8];
+                    String latitude3 = words[9];
+
+                    String longitude1 = words[10];
+                    String longitude2 = words[11];
+                    String longitude3 = words[12];
 
                     //converting input to params for the method being invoked.
 
@@ -129,7 +138,7 @@ public class Parser {
                 case "delete":
                     // delete window id testing out the word catcher.
                     String window = this.words[1];
-                    String id = this.words[2];
+                    id = this.words[2];
 
                     //converting to params for the methods being invoked.
                     AgentID convertedId = newView.createNewAgentID(id);
@@ -167,7 +176,7 @@ public class Parser {
         }
         else if (this.words[0].equals("set") &&
                 (this.words[2].equals("course") || this.words[2].equals("speed")
-                        || this.words[2].equals("depth") || this.words[2].equals("altitude")|| this.words[2].equals("longitude"))) {
+                        || this.words[2].equals("depth") || this.words[2].equals("altitude"))){
             switch(this.words[2]) {
                 case "course":
                     // set id course course
@@ -193,56 +202,6 @@ public class Parser {
                     System.out.println("Use CommandActorSetAltitudeDepth");
                     System.out.println("Variables: ID: " + this.id + " Altitude: " + this.altitude);
                     // TODO: Use CommandActorSetAltitudeDepth
-                    break;
-                case "longitude":
-                    //TODO: make sure to remove the question mark and replace it with a single quote for checking minutes.
-                    //TODO: have to make a few edits to converting from string to doubles but working just needs to be duplicated for altitude as well.
-                    //set positionInArray longitude degrees*minutes'seconds"
-                    System.out.println("Set longitude has been invoked.");
-                    //catching.
-                    int arrayPos = Integer.parseInt(this.words[1]);
-                    String coordinatePreParse = this.words[3];
-
-                    System.out.println("The passed in command is: " + arrayPos +" "+ coordinatePreParse);
-                    //converting input to params for the method being invoked.
-                    StringBuilder degrees = new StringBuilder();
-                    StringBuilder minutes = new StringBuilder();
-                    StringBuilder seconds = new StringBuilder();
-                    boolean deg = false;
-                    boolean min = false;
-                    boolean sec = false;
-
-                    for(int i =0; i < coordinatePreParse.length(); i++)
-                    {
-                        if(coordinatePreParse.charAt(i) != '*' && !deg)
-                        {
-                            degrees.append(coordinatePreParse.charAt(i));
-                        }else if(coordinatePreParse.charAt(i) == '*')
-                        {
-                            deg = true;
-                        }
-
-                        else if(coordinatePreParse.charAt(i) != '?' && !min)
-                        {
-                            minutes.append(coordinatePreParse.charAt(i));
-                        }else if(coordinatePreParse.charAt(i) == '?')
-                        {
-                            min = true;
-                        }
-
-                        else if(coordinatePreParse.charAt(i) != '"' && !sec)
-                        {
-                            seconds.append(coordinatePreParse.charAt(i));
-                        }else if(coordinatePreParse.charAt(i) == '"')
-                        {
-                            sec = true;
-                        }
-                    }
-                    System.out.println(degrees.toString() +" "+ minutes.toString() +" "+ seconds.toString());
-                    //invoking the method to set a longitude variable.
-                    Longitude newLongitude = new Longitude(Integer.parseInt(degrees.toString()),Integer.parseInt(minutes.toString()), Double.parseDouble(seconds.toString()));
-                    longitudes[arrayPos] = newLongitude;
-                    System.out.println("The longitude at position: " + arrayPos + "has been updated to " + newLongitude.toString());
                     break;
             }
         }

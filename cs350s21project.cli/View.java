@@ -13,7 +13,9 @@ public class View {
     public static void main(String[] args)
     {
         View ref = new View();
-        ref.launchAllWindows();
+        ref.parseLongitudeString("(49*39'32#" );
+        ref.parseLatitudeString("0*10'0#" );
+        ref.parseLatitudeString("0*0'30#)" );
     }
 
     //For now this is a test method to help with testing createWindowMethods
@@ -82,5 +84,111 @@ public class View {
     {
         CommandViewDeleteWindow deleteWindow = new CommandViewDeleteWindow(windowManager, text, windowId);
         deleteWindow.execute();
+    }
+
+    //tested extracts variables and creates a longitude object just fine.
+
+    public Longitude parseLongitudeString(String coordinatePreParse)
+    {
+        //TODO: make sure to remove the question mark and replace it with a single quote for checking minutes.
+        //TODO: have to make a few edits to converting from string to doubles but working just needs to be duplicated for altitude as well.
+        //set positionInArray longitude degrees*minutes'seconds"
+
+        System.out.println("The passed in command is: " + coordinatePreParse);
+        //converting input to params for the method being invoked.
+        StringBuilder degrees = new StringBuilder();
+        StringBuilder minutes = new StringBuilder();
+        StringBuilder seconds = new StringBuilder();
+        boolean deg = false;
+        boolean min = false;
+        boolean sec = false;
+
+        for(int i =0; i < coordinatePreParse.length(); i++)
+        {
+            if(coordinatePreParse.charAt(i) != '*' && !deg && coordinatePreParse.charAt(i) != '(' )
+            {
+                degrees.append(coordinatePreParse.charAt(i));
+            }else if(coordinatePreParse.charAt(i) == '*')
+            {
+                deg = true;
+            }
+
+            else if(coordinatePreParse.charAt(i) != '\'' && !min && coordinatePreParse.charAt(i) != '('  )
+            {
+                minutes.append(coordinatePreParse.charAt(i));
+            }else if(coordinatePreParse.charAt(i) == '\'')
+            {
+                min = true;
+            }
+
+            else if(coordinatePreParse.charAt(i) != '#' && !sec && coordinatePreParse.charAt(i) != '(' )
+            {
+                seconds.append(coordinatePreParse.charAt(i));
+            }else if(coordinatePreParse.charAt(i) == '#')
+            {
+                sec = true;
+            }
+        }
+        System.out.println(degrees.toString() +" "+ minutes.toString() +" "+ seconds.toString());
+        //invoking the method to set a longitude variable.
+        int convSec = Integer.parseInt(seconds.toString());
+
+        Longitude newLongitude = new Longitude(Integer.parseInt(degrees.toString()),Integer.parseInt(minutes.toString()), convSec);
+        System.out.println(newLongitude.toString());
+
+        return newLongitude;
+    }
+
+    public Latitude parseLatitudeString(String coordinatePreParse)
+    {
+        //TODO: make sure to remove the question mark and replace it with a single quote for checking minutes.
+        //TODO: have to make a few edits to converting from string to doubles but working just needs to be duplicated for altitude as well.
+        //set positionInArray longitude degrees*minutes'seconds"
+
+        System.out.println("The passed in command is: "+ coordinatePreParse);
+        //converting input to params for the method being invoked.
+        StringBuilder degrees = new StringBuilder();
+        StringBuilder minutes = new StringBuilder();
+        StringBuilder seconds = new StringBuilder();
+
+        boolean deg = false;
+        boolean min = false;
+        boolean sec = false;
+
+        for(int i =0; i < coordinatePreParse.length(); i++)
+        {
+
+            if(coordinatePreParse.charAt(i) != '*' && !deg && coordinatePreParse.charAt(i) != '(' )
+            {
+                degrees.append(coordinatePreParse.charAt(i));
+            }else if(coordinatePreParse.charAt(i) == '*')
+            {
+                deg = true;
+            }
+
+            else if(coordinatePreParse.charAt(i) != '\'' && !min && coordinatePreParse.charAt(i) != '('  )
+            {
+                minutes.append(coordinatePreParse.charAt(i));
+            }else if(coordinatePreParse.charAt(i) == '\'')
+            {
+                min = true;
+            }
+
+            else if(coordinatePreParse.charAt(i) != '#' && !sec && coordinatePreParse.charAt(i) != '(' )
+            {
+                seconds.append(coordinatePreParse.charAt(i));
+            }else if(coordinatePreParse.charAt(i) == '#')
+            {
+                sec = true;
+            }
+        }
+        System.out.println(degrees.toString() +" "+ minutes.toString() +" "+ seconds.toString());
+        //invoking the method to set a longitude variable.
+        int convSec = Integer.parseInt(seconds.toString());
+
+        Latitude newLatitude = new Latitude(Integer.parseInt(degrees.toString()),Integer.parseInt(minutes.toString()), convSec);
+        System.out.println(newLatitude.toString());
+
+        return newLatitude;
     }
 }
