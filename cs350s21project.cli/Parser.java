@@ -1,18 +1,12 @@
 package cs350s21project.cli;
-
 import cs350s21project.controller.CommandManagers;
 import cs350s21project.datatype.AgentID;
 import cs350s21project.datatype.Latitude;
 import cs350s21project.datatype.Longitude;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Parser {
-    //Views specific custom data strucs and variables.
-    private Longitude[] longitudes = new Longitude[3];
-    private Latitude[] latitudes =  new Latitude[3];
-
     // Custom Variables, not called for in specs
     private CommandManagers universalWindowManager = new CommandManagers();
     private HashSet<String> keyWords = new HashSet<>();
@@ -25,16 +19,6 @@ public class Parser {
     private String id2;
     private String id3;
     private ArrayList<String> idN;
-
-    // Views Variables
-    View newView = new View();
-    private int size;
-    private Latitude latitudeOrigin = new Latitude(2, 4, 1.00);
-    private Latitude latitudeExtent = new Latitude(2, 4, 1.00);
-    private Latitude latitudeInterval = new Latitude(2, 4, 1.00);
-    private Longitude longitudeOrigin = new Longitude(2, 4, 1.00);
-    private Longitude longitudeExtent = new Longitude(2, 4, 1.00);
-    private Longitude longitudeInterval = new Longitude(2, 4, 1.00);
 
     // Actors variables
     private int coordinates; // TODO: datatype will be CoordinateWorld3D 45*30'15"/110*30'10"/200
@@ -57,7 +41,6 @@ public class Parser {
     // time
 
     public void runParser(String command) {
-        //command is the string passed in via the application gui
         this.userInput = command;
         loadKeyWords();
         parseInput();
@@ -86,14 +69,6 @@ public class Parser {
         this.idN = tempIDN;
     }
 
-//Code commented out because we aren't going to be taking in via scanner.
-/*    public void getUserInput() {
-        Scanner scanner = new Scanner(new InputStreamReader(System.in));
-
-        //passing in the user command into a user input object.
-        this.userInput = scanner.nextLine();
-    }*/
-
     public void parseInput() {
         this.words = this.userInput.split(" ");
     }
@@ -114,13 +89,13 @@ public class Parser {
     public void views() {
         // I. VIEWS
         if (this.words[1].equals("window")) {
-        //create window wTop top view with 200 (49*39'32# 0*10'0# 0*0'30#) (117*25'30# 0*10'0# 0*0'30#)
+        //Example input: create window wTop top view with 200 (49*39'32# 0*10'0# 0*0'30#) (117*25'30# 0*10'0# 0*0'30#)
             switch(this.words[0]) {
                 case "create":
                     if(words[3].equals("top")) {
                         View newView = new View();
                         // create window id top view with size (latitude1 latitude2 latitude3) (longitude longitude2 longitude3)
-                        System.out.println("Stop");
+
                         //catching.
                         AgentID id = newView.createNewAgentID(words[2]);
                         int size = Integer.parseInt(words[6]);
@@ -137,12 +112,21 @@ public class Parser {
                         //invoking the create top method.
                         newView.buildTopView(id, universalWindowManager, size, latitude1, latitude2, latitude3, longitude1, longitude2, longitude3);
                     }
+                    //else if statements are for front and side view place holders in case they need to be implemented later.
+                    else if(words[3].equals("front"))
+                    {
+                        System.out.println("Front view has been invoked.");
+                    }
+                    else if(words[3].equals("side"))
+                    {
+                        System.out.println("Side view has been invoked.");
+                    }
                     break;
                 case "delete":
                     // delete window id testing out the word catcher.
                     String window = this.words[1];
 
-                    newView = new View();
+                    View newView = new View();
                     AgentID id = newView.createNewAgentID(this.words[2]);
 
                     //converting to params for the methods being invoked.
