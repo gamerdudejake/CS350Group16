@@ -1,53 +1,17 @@
-//TODO: LINK TO PARSER AND DELETE LAUNCH ALL WINDOWS METHOD AND MAIN AFTER LINKING.
 package cs350s21project.cli;
 import cs350s21project.controller.CommandManagers;
 import cs350s21project.controller.command.view.*;
 import cs350s21project.datatype.AgentID;
-import cs350s21project.datatype.Altitude;
 import cs350s21project.datatype.Latitude;
 import cs350s21project.datatype.Longitude;
 
 public class View {
 
-    //tester method please delete when interconnecting.
-    public static void main(String[] args)
-    {
-        View ref = new View();
-        ref.launchAllWindows();
-    }
-
-    //For now this is a test method to help with testing createWindowMethods
-    //note I guess can't have same id for two different views.
-    public void launchAllWindows()
-    {
-        AgentID idTop = createNewAgentID("TopView");
-        AgentID idFront = createNewAgentID("FrontView");
-        AgentID idSide = createNewAgentID("SideView");
-        CommandManagers windowManager = new CommandManagers();
-
-        Latitude latitudeOrigin = new Latitude(2, 4, 1.00);
-        Latitude latitudeExtent = new Latitude(2, 4, 1.00);
-        Latitude latitudeInterval = new Latitude(2, 4, 1.00);
-        Longitude longitudeOrigin = new Longitude(2, 4, 1.00);
-        Longitude longitudeExtent = new Longitude(2, 4, 1.00);
-        Longitude longitudeInterval = new Longitude(2, 4, 1.00);
-
-        Altitude altitudeOrigin = buildAltitudeCoordinate(3.00);
-        Altitude altitudeExtent = buildAltitudeCoordinate(3.00);
-        Altitude altitudeAGLInterval = buildAltitudeCoordinate(3.00);
-        Altitude altitudeBGLInterval = buildAltitudeCoordinate(3.00);
-
-        buildTopView(idTop, windowManager, latitudeOrigin, latitudeExtent, latitudeInterval, longitudeOrigin, longitudeExtent, longitudeInterval);
-        buildFrontView(idFront, windowManager, longitudeOrigin, longitudeExtent, longitudeInterval, altitudeOrigin, altitudeExtent, altitudeAGLInterval, altitudeBGLInterval);
-        buildSideView(idSide, windowManager, latitudeOrigin, latitudeExtent, latitudeInterval, altitudeOrigin, altitudeExtent,altitudeAGLInterval, altitudeBGLInterval);
-    }
-
-    public void buildTopView(AgentID idWindow, CommandManagers windowManager, Latitude latitudeOrigin, Latitude latitudeExtent, Latitude latitudeInterval,
+    public void buildTopView(AgentID idWindow, CommandManagers windowManager, int size, Latitude latitudeOrigin, Latitude latitudeExtent, Latitude latitudeInterval,
                              Longitude longitudeOrigin, Longitude longitudeExtent, Longitude longitudeInterval)
     {
         //window sizing and name setup
         String windowName = "TopView";
-        int size = 1920;
 
         //building
         CommandViewCreateWindowTop TopWindow = new CommandViewCreateWindowTop(windowManager, windowName, idWindow, size, latitudeOrigin, latitudeExtent,
@@ -55,55 +19,7 @@ public class View {
 
         //execute Window
         TopWindow.execute();
-    }
-
-    public void buildFrontView(AgentID idWindow, CommandManagers windowManager, Longitude longitudeOrigin, Longitude longitudeExtent, Longitude longitudeInterval,
-                               Altitude altitudeOrigin, Altitude altitudeExtent, Altitude altitudeAGLInterval, Altitude altitudeBGLInterval)
-    {
-        //window sizing and name setup
-        String windowName = "FrontView";
-        int size = 1920;
-
-        //building
-        CommandViewCreateWindowFront frontWindow = new CommandViewCreateWindowFront(windowManager, windowName, idWindow, size,
-                longitudeOrigin, longitudeExtent, longitudeInterval, altitudeOrigin, altitudeExtent, altitudeAGLInterval, altitudeBGLInterval);
-
-        //execute Window
-        frontWindow.execute();
-    }
-
-    public void buildSideView(AgentID idWindow, CommandManagers windowManager, Latitude latitudeOrigin, Latitude latitudeExtent, Latitude latitudeInterval,
-                              Altitude altitudeOrigin, Altitude altitudeExtent, Altitude altitudeAGLInterval, Altitude altitudeBGLInterval)
-    {
-        //window sizing in pixels and name setup
-        String windowName = "SideView";
-        int size = 1920;
-        //building
-        CommandViewCreateWindowSide sideWindow = new CommandViewCreateWindowSide(windowManager, windowName, idWindow, size, latitudeOrigin, latitudeExtent,
-                latitudeInterval, altitudeOrigin, altitudeExtent, altitudeAGLInterval, altitudeBGLInterval);
-
-        //execute Window
-        sideWindow.execute();
-    }
-
-    //temporary methods utilized for displaying what makes a latitude, longitude, and altitude object.
-    public Altitude buildAltitudeCoordinate(double initialAltitude) {
-        Altitude newAltitudeCoordinate = new Altitude(5.00);
-        System.out.println("The following coordinate has been set for Altitude: " + newAltitudeCoordinate.toString());
-        return newAltitudeCoordinate;
-    }
-
-    //temporary method utilized for displaying what makes a latitude object.
-    public Latitude buildLatitudeCoordinate(int degrees, int minutes, double seconds) {
-        Latitude newLatitude = new Latitude(degrees, minutes, seconds);
-        System.out.println("The following coordinate has been set for Latitude: " + newLatitude.toString());
-        return newLatitude;
-    }
-
-    public Longitude buildLongitudeCoordinate(int degrees, int minutes, double seconds) {
-        Longitude newLongitude = new Longitude(degrees, minutes, seconds);
-        System.out.println("The following data has been set for Longitude: " + newLongitude.toString());
-        return newLongitude;
+        System.out.println("The buildTopView method has been invoked.");
     }
 
     //misc.
@@ -120,16 +36,106 @@ public class View {
         deleteWindow.execute();
     }
 
-    public void unlockWindow(AgentID windowId, String text, CommandManagers windowManager)
+    public Longitude parseLongitudeString(String coordinatePreParse)
     {
-        CommandViewUnlockWindow unlockWindow = new CommandViewUnlockWindow(windowManager, text, windowId);
-        unlockWindow.execute();
+        //TODO: make sure to remove the question mark and replace it with a single quote for checking minutes.
+        //TODO: have to make a few edits to converting from string to doubles but working just needs to be duplicated for altitude as well.
+        //set positionInArray longitude degrees*minutes'seconds"
+
+        System.out.println("The passed in command is: " + coordinatePreParse);
+        //converting input to params for the method being invoked.
+        StringBuilder degrees = new StringBuilder();
+        StringBuilder minutes = new StringBuilder();
+        StringBuilder seconds = new StringBuilder();
+        boolean deg = false;
+        boolean min = false;
+        boolean sec = false;
+
+        for(int i =0; i < coordinatePreParse.length(); i++)
+        {
+            if(coordinatePreParse.charAt(i) != '*' && !deg && coordinatePreParse.charAt(i) != '(' )
+            {
+                degrees.append(coordinatePreParse.charAt(i));
+            }else if(coordinatePreParse.charAt(i) == '*')
+            {
+                deg = true;
+            }
+
+            else if(coordinatePreParse.charAt(i) != '\'' && !min && coordinatePreParse.charAt(i) != '('  )
+            {
+                minutes.append(coordinatePreParse.charAt(i));
+            }else if(coordinatePreParse.charAt(i) == '\'')
+            {
+                min = true;
+            }
+
+            else if(coordinatePreParse.charAt(i) != '#' && !sec && coordinatePreParse.charAt(i) != '(' )
+            {
+                seconds.append(coordinatePreParse.charAt(i));
+            }else if(coordinatePreParse.charAt(i) == '#')
+            {
+                sec = true;
+            }
+        }
+        System.out.println(degrees.toString() +" "+ minutes.toString() +" "+ seconds.toString());
+        //invoking the method to set a longitude variable.
+        int convSec = Integer.parseInt(seconds.toString());
+
+        Longitude newLongitude = new Longitude(Integer.parseInt(degrees.toString()),Integer.parseInt(minutes.toString()), convSec);
+        System.out.println(newLongitude.toString());
+
+        return newLongitude;
     }
 
-    //utilizes two id's which are the windowId and an actorID like munitions.
-    public void lockWindow(AgentID windowId, String text, CommandManagers windowManager, AgentID actorID)
+    public Latitude parseLatitudeString(String coordinatePreParse)
     {
-        CommandViewLockWindow lockWindow = new CommandViewLockWindow(windowManager, text, windowId, actorID);
-        lockWindow.execute();
+        //TODO: make sure to remove the question mark and replace it with a single quote for checking minutes.
+        //TODO: have to make a few edits to converting from string to doubles but working just needs to be duplicated for altitude as well.
+
+        System.out.println("The passed in command is: "+ coordinatePreParse);
+        //converting input to params for the method being invoked.
+        StringBuilder degrees = new StringBuilder();
+        StringBuilder minutes = new StringBuilder();
+        StringBuilder seconds = new StringBuilder();
+
+        boolean deg = false;
+        boolean min = false;
+        boolean sec = false;
+
+        for(int i =0; i < coordinatePreParse.length(); i++)
+        {
+
+            if(coordinatePreParse.charAt(i) != '*' && !deg && coordinatePreParse.charAt(i) != '(' )
+            {
+                degrees.append(coordinatePreParse.charAt(i));
+            }else if(coordinatePreParse.charAt(i) == '*')
+            {
+                deg = true;
+            }
+
+            else if(coordinatePreParse.charAt(i) != '\'' && !min && coordinatePreParse.charAt(i) != '('  )
+            {
+                minutes.append(coordinatePreParse.charAt(i));
+            }else if(coordinatePreParse.charAt(i) == '\'')
+            {
+                min = true;
+            }
+
+            else if(coordinatePreParse.charAt(i) != '#' && !sec && coordinatePreParse.charAt(i) != '(' )
+            {
+                seconds.append(coordinatePreParse.charAt(i));
+            }else if(coordinatePreParse.charAt(i) == '#')
+            {
+                sec = true;
+            }
+        }
+        System.out.println(degrees.toString() +" "+ minutes.toString() +" "+ seconds.toString());
+        //invoking the method to set a longitude variable.
+        int convSec = Integer.parseInt(seconds.toString());
+
+        Latitude newLatitude = new Latitude(Integer.parseInt(degrees.toString()),Integer.parseInt(minutes.toString()), convSec);
+        System.out.println(newLatitude.toString());
+
+        return newLatitude;
     }
 }

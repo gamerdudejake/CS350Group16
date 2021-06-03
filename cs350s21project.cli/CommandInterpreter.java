@@ -4,19 +4,10 @@ package cs350s21project.cli;
 import cs350s21project.controller.CommandManagers;
 import cs350s21project.controller.command.A_Command;
 
-import java.util.Scanner;
-
 public class CommandInterpreter {
     public static void main(String[] args) {
-
-        CommandInterpreter CmdInterpartor = new CommandInterpreter();
-        Scanner rf = new Scanner(System.in);
-        String onStart = rf.nextLine();
-
-        System.out.println("Please type the word: run in the console to launch app.");
-        if(onStart.equalsIgnoreCase("run")) {
-            CmdInterpartor.evaluate("hello");
-        }
+        CommandInterpreter CmdInterpreter = new CommandInterpreter();
+        CmdInterpreter.evaluate("run");
     }
 
     //when the input is passed in it will then launch the Commands console
