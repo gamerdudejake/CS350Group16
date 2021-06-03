@@ -1,4 +1,8 @@
 // I. VIEWS
+<<<<<<< HEAD:cs350s21project.cli/testCommands.txt
+=======
+// needs clarification from Luis first
+>>>>>>> TestMasterBranch:cs350s21project.cli/cs350s21project/cli/testCommands.txt
 // 1. create window id top view with size (latitude1 latitude2 latitude3) (longitude1 longitude2 longitude3)
 create window id1 top view with size (4 2 1) (6 123 0)
 
@@ -74,7 +78,6 @@ define sensor distance id1 with trigger distance 48
 
 // 8. define sensor time id with trigger time time
 define sensor time id with trigger time 74
-
 
 // VII. MISCELLANEOUS
 // 1. @load filename
