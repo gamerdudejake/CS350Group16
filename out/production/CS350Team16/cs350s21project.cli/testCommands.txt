@@ -1,5 +1,8 @@
 // I. VIEWS
+<<<<<<< HEAD:out/production/CS350Team16/testCommands.txt
+=======
 // needs clarification from Luis first
+>>>>>>> TestMasterBranch:out/production/CS350Team16/cs350s21project.cli/testCommands.txt
 // 1. create window id top view with size (latitude1 latitude2 latitude3) (longitude1 longitude2 longitude3)
 create window id1 top view with size (4 2 1) (6 123 0)
 
@@ -18,7 +21,7 @@ create actor actor1 from actor2 at 444 with course 22 speed 14
 set id1 course 22
 
 // 7. set id speed speed
-Set id speed 55
+Set id4 speed 55
 
 // 8. set id altitude|depth altitude
 set id altitude 888
