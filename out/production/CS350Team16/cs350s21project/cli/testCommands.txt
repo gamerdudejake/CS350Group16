@@ -1,0 +1,99 @@
+// I. VIEWS
+<<<<<<< HEAD:cs350s21project.cli/testCommands.txt
+=======
+// needs clarification from Luis first
+>>>>>>> TestMasterBranch:cs350s21project.cli/cs350s21project/cli/testCommands.txt
+// 1. create window id top view with size (latitude1 latitude2 latitude3) (longitude1 longitude2 longitude3)
+create window id1 top view with size (4 2 1) (6 123 0)
+
+//4. delete window id
+delete window id1
+
+
+// II. ACTORS
+// 1. define ship id1 with munition[s] (idn+)
+define ship ship1 with munitions (bomb1, shell4, depth_charge6)
+
+// 5. create actor id1 from id2 at coordinates with course course speed speed
+create actor actor1 from actor2 at 444 with course 22 speed 14
+
+// 6. set id course course
+set id1 course 22
+
+// 7. set id speed speed
+Set id4 speed 55
+
+// 8. set id altitude|depth altitude
+set id altitude 888
+set id depth 1661
+
+
+// III. MUNITIONS
+// 1. define munition bomb id
+define munition bomb id1
+
+// 2. define munition shell id
+define munition shell id1
+
+// 3. define munition depth_charge id1 with fuze id2
+define munition depth_charge id1 with fuze id2
+
+// 4. define munition torpedo id1 with sensor id2 fuze id3 arming time time
+define munition torpedo id1 with sensor id2 fuze id3 arming time 6
+
+// 5. define munition missile id1 with sensor id2 fuze id3 arming distance distance
+define munition missile id1 with sensor id2 fuze id3 arming distance 10
+
+// 7. set id1 load munition id2
+set id1 load munition id2
+
+// 8. set id1 deploy munition id2
+set id1 deploy munition id2
+
+// 9. set id1 deploy munition id2 at azimuth azimuth elevation elevation
+set id1 deploy munition id2 at azimuth 75 elevation 888
+
+
+// IV. SENSORS/FUZES
+// 1. define sensor radar id with field of view fov power power sensitivity sensitivity
+define sensor radar id1 with field of view 6 power 9000 sensitivity 45
+
+// 2. define sensor thermal id with field of view fov sensitivity sensitivity
+define sensor thermal id1 with field of view 78 sensitivity 11
+
+// 3. define sensor acoustic id with sensitivity sensitivity
+define sensor acoustic id1 with sensitivity 854
+
+// 4. define sensor sonar active id with power power sensitivity sensitivity
+define sensor sonar active id1 with power 55 sensitivity 874
+
+// 5. define sensor sonar passive id with sensitivity sensitivity
+define sensor sonar passive id1 with sensitivity 753
+
+// 6. define sensor depth id with trigger depth altitude
+define sensor depth id1 with trigger depth 99
+
+// 7. define sensor distance id with trigger distance distance
+define sensor distance id1 with trigger distance 48
+
+// 8. define sensor time id with trigger time time
+define sensor time id with trigger time 74
+
+// VII. MISCELLANEOUS
+// 1. @load filename
+@load test.txt
+
+// 2.* @pause
+@pause
+
+// 3. @resume
+@resume
+
+// 4. @set update time
+@set update 54
+
+// 5. @wait
+@wait 12
+
+// 6.* @force id state to coordinates with course course speed speed
+@force id1 state to 65 with course 33 speed 11
