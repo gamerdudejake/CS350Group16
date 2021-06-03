@@ -26,7 +26,6 @@ public class Misc {
     {
         CommandMiscResume resumeMisc = new CommandMiscResume(manager, text);
         resumeMisc.execute();
-
     }
 
     //@set update time
