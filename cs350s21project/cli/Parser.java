@@ -74,15 +74,11 @@ public class Parser {
     }
 
     public void determineCommand() {
-        if (this.words.length >= 1) {
-            if (this.words[0].charAt(0) == '@'){
-                miscellaneous();
-            }
+        if (this.words[0].charAt(0) == '@') {
+            miscellaneous();
         }
         else if (this.words.length >= 3) {
             views();
-        }
-        else if (this.words.length >= 4) {
             actors();
             munitions();
             sensorsFuzes();
