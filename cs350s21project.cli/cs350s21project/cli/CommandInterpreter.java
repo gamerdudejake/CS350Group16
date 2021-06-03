@@ -6,15 +6,8 @@ import cs350s21project.controller.command.A_Command;
 
 public class CommandInterpreter {
     public static void main(String[] args) {
-<<<<<<< HEAD:cs350s21project.cli/CommandInterpreter.java
-        CommandInterpreter ref = new CommandInterpreter();
-        Scanner rf = new Scanner(System.in);
-        String f = rf.nextLine();
-        ref.evaluate(f);
-=======
         CommandInterpreter CmdInterpreter = new CommandInterpreter();
         CmdInterpreter.evaluate("run");
->>>>>>> TestMasterBranch:cs350s21project.cli/cs350s21project/cli/CommandInterpreter.java
     }
 
     //when the input is passed in it will then launch the Commands console
