@@ -5,7 +5,7 @@ import cs350s21project.datatype.*;
 public class SensorsAndFuses {
 	//ALL commands start by taking a CommandManagers field, followed by a string of Text of the Command that 
 	//The user typed. 
-	//CommandManagers is always refered to as CM, and the command text is always refered to as "text"
+	//CommandManagers is always referred to as CM, and the command text is always refered to as "text"
 	
 	//The input is displayed for each and involves CommandMangers,Strings,and doubles. AgentIDs are inputted as Strings.
 	// 

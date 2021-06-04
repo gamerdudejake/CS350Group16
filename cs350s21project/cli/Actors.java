@@ -14,7 +14,7 @@ public class Actors {
     public static void main(String[] args)
     {
         Actors ref = new Actors();
-        ref.parseActorsCoordinats("49*39'31#/117*25'34#/0");
+        ref.parseActorsCoordinates("49*39'31#/117*25'34#/0");
     }
 
     public void defineShip(CommandManagers managers, String text, AgentID idActor, List<AgentID> idMunitions)
@@ -84,7 +84,7 @@ public class Actors {
         return target;
     }
 
-    public CoordinateWorld3D parseActorsCoordinats(String input)
+    public CoordinateWorld3D parseActorsCoordinates(String input)
     {
 
         String[] coordinates = input.split("/");
