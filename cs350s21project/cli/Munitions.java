@@ -6,7 +6,7 @@ import cs350s21project.controller.command.actor.*;
 //Todo:Not to sure if you need to execute any of these methods so bring that up in the team meeting. -LG june/1
 public class Munitions {
 
-	public void Define_Bomb(CommandManagers CM, String textCommand,String id)
+	public void Define_Bomb(CommandManagers CM, String textCommand, String id)
 	{
 		AgentID AG = new AgentID(id);
 		CommandMunitionDefineBomb CBomb = new CommandMunitionDefineBomb(CM,textCommand,AG);

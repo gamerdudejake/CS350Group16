@@ -229,27 +229,34 @@ public class Parser {
             switch(this.words[2]) {
                 case "bomb":
                     // define munition bomb id
+                    Munitions m = new Munitions();
+                    //catching
                     this.id = this.words[3];
-                    System.out.println("Use CommandMunitionDefineBomb");
-                    System.out.println("Variables: ID: " + this.id);
-                    // TODO: Use CommandMunitionDefineBomb
+                    //executing
+                    m.Define_Bomb(universalWindowManager, "Define_bomb invoked", this.id);
+                    System.out.println("Define bomb has been invoked.");
                     break;
                 case "shell":
                     // define munition shell id
+                    m = new Munitions();
+                    //catching
                     this.id = this.words[3];
-                    System.out.println("Use CommandMunitionDefineShell");
-                    System.out.println("Variables: ID: " + this.id);
-                    // TODO: Use CommandMunitionDefineShell
+                    //executing
+                    m.Define_Shell(universalWindowManager, "Define_bomb invoked", this.id);
+                    System.out.println("Define shell has been invoked.");
                     break;
                 case "depth_charge":
+                    m = new Munitions();
                     // define munition depth_charge id1 with fuze id2
                     this.id = this.words[3];
                     this.id2 = this.words[6];
                     System.out.println("Use CommandMunitionDefineDepthCharge");
                     System.out.println("Variables: ID: " + this.id + " ID2: " + this.id2);
                     // TODO: Use CommandMunitionDefineDepthCharge
+                    m.DefineDepthCharge(universalWindowManager, "depth_charge invoked", this.id, this.id2);
                     break;
                 case "torpedo":
+                    m = new Munitions();
                     // define munition torpedo id1 with sensor id2 fuze id3 arming time time
                     this.id = this.words[3];
                     this.id2 = this.words[6];
@@ -259,8 +266,10 @@ public class Parser {
                     System.out.println("Variables: ID: " + this.id + " ID2: " + this.id2 + " ID3: " +
                             this.id3 + " Time: " + this.time);
                     // TODO: Use CommandMunitionDefineTorpedo
+                    m.DefineTorpedo(universalWindowManager,"Torpedo invoked",this.id, this.id2, this.id3, this.time );
                     break;
                 case "missile":
+                    m = new Munitions();
                     // define munition missile id1 with sensor id2 fuze id3 arming distance distance
                     this.id = this.words[3];
                     this.id2 = this.words[6];
@@ -270,26 +279,32 @@ public class Parser {
                     System.out.println("Variables: ID: " + this.id + " ID2: " + this.id2 + " ID3: " +
                             this.id3 + " Distance: " + this.distance);
                     // TODO: Use CommandMunitionDefineMissile
+                    m.DefineMissile(universalWindowManager, "missile invoked", this.id, this.id2, this.id3, this.distance);
                     break;
             }
             // set
             if (this.words[2].equals("load")) {
+                Munitions m = new Munitions();
                 // set id1 load munition id2
                 this.id = this.words[1];
                 this.id2 = this.words[4];
                 System.out.println("Use CommandActorLoadMunition");
                 System.out.println("Variables: ID: " + this.id + " ID2: " + this.id2);
+                m.LoadMunition(universalWindowManager, "munitions loaded" ,this.id, this.id2);
                 // TODO: Use CommandActorLoadMunition
             }
             else if (this.words[2].equals("deploy") && this.words.length == 5) {
+                Munitions m = new Munitions();
                 // set id1 deploy munition id2
                 this.id = this.words[1];
                 this.id2 = this.words[4];
                 System.out.println("Use CommandActorDeployMunition");
                 System.out.println("Variables: ID: " + this.id + " ID2: " + this.id2);
+                m.DeployMunition(universalWindowManager, "deploy munition invoked.", this.id, this.id2);
                 // TODO: Use CommandActorDeployMunition
             }
             else if (this.words[2].equals("deploy") && this.words.length > 5) {
+                Munitions m = new Munitions();
                 // set id1 deploy munition id2 at azimuth azimuth elevation elevation
                 this.id = this.words[1];
                 this.id2 = this.words[4];
@@ -298,6 +313,7 @@ public class Parser {
                 System.out.println("Use CommandActorDeployMunitionShell");
                 System.out.println("Variables: ID: " + this.id + " ID2: " + this.id2 + " Azimuth: " +
                         this.azimuth + " Elevation: " + this.elevation);
+                m.DeployMunitionShell(universalWindowManager, "Deploy munitions shell invoked.", this.id, this.id2, this.azimuth, this.elevation);
                 // TODO: Use CommandActorDeployMunitionShell
             }
         }
