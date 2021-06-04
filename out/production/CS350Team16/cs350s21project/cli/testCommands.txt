@@ -1,8 +1,8 @@
 // I. VIEWS
-<<<<<<< HEAD:out/production/CS350Team16/testCommands.txt
+<<<<<<< HEAD:cs350s21project.cli/testCommands.txt
 =======
 // needs clarification from Luis first
->>>>>>> TestMasterBranch:out/production/CS350Team16/cs350s21project.cli/testCommands.txt
+>>>>>>> TestMasterBranch:cs350s21project.cli/cs350s21project/cli/testCommands.txt
 // 1. create window id top view with size (latitude1 latitude2 latitude3) (longitude1 longitude2 longitude3)
 create window id1 top view with size (4 2 1) (6 123 0)
 
