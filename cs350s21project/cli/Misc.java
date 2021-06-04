@@ -57,9 +57,9 @@ public class Misc {
 
     //-------Misc. methods for executing the above methods.-----------
 
-    public Time createNewTime(int hour, int minute, double seconds)
+    public Time createNewTime(double seconds)
     {
-        return new Time(hour, minute, seconds);
+        return new Time(seconds);
     }
 
     public Groundspeed createNewGroundSpeed(double speed)

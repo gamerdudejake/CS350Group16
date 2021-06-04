@@ -73,18 +73,22 @@ public class Parser {
     }
 
     public void determineCommand() {
-        if (this.words[0].charAt(0) == '@') {
-            miscellaneous();
+        if (this.words.length >= 1) {
+            if (this.words[0].charAt(0) == '@'){
+                miscellaneous();
+            }
         }
-        else if (this.words.length >= 3) {
+        if (this.words.length >= 3) {
             views();
+        }
+        if (this.words.length >= 4) {
             actors();
             munitions();
             sensorsFuzes();
         }
     }
 
-    //ToDo: Views parser working needs further testing -lg
+    //ToDo: looks valid
     public void views() {
         // I. VIEWS
         if (this.words[1].equals("window")) {
@@ -166,9 +170,9 @@ public class Parser {
             AgentID id1 = view.createNewAgentID(this.id);
             AgentID id2 = view.createNewAgentID(this.id2);
             double crse = Double.parseDouble(this.words[9]);
-            double spd = Double.parseDouble(this.words[10]);
+            double spd = Double.parseDouble(this.words[11]);
             //execute
-            actor.createActor(universalWindowManager, "actor invoked", id1, id2, actor.parseActorsCoordinats(unparsedCor),actor.createCourse(crse), actor.createGroundSpeed(spd));
+            actor.createActor(universalWindowManager, "actor invoked", id1, id2, actor.parseActorsCoordinates(unparsedCor), actor.createCourse(crse), actor.createGroundSpeed(spd));
             System.out.println("actor has been successfully invoked.");
         }
         else if (this.words[0].equals("set") &&
@@ -321,6 +325,7 @@ public class Parser {
 
     public void sensorsFuzes() {
         // IV. SENSORS/FUZES
+		SensorsAndFuses SF = new SensorsAndFuses();
         if (this.words[1].equals("sensor")) {
             switch(this.words[2]) {
                 case "radar":
@@ -333,6 +338,7 @@ public class Parser {
                     System.out.println("Variables: ID: " + this.id + " FOV: " + this.fov + " Power: " +
                             this.power + " Sensitivity: " + this.sensitivity);
                     // TODO: Use CommandSensorDefineRadar
+					SF.Sensor_Radar(this.universalWindowManager,this.userInput,this.id,this.fov,this.power,this.sensitivity);
                     break;
                 case "thermal":
                     // define sensor thermal id with field of view fov sensitivity sensitivity
@@ -342,7 +348,7 @@ public class Parser {
                     System.out.println("Use CommandSensorDefineRadar");
                     System.out.println("Variables: ID: " + this.id + " FOV: " + this.fov +
                             " Sensitivity: " + this.sensitivity);
-                    // TODO: Use CommandSensorDefineThermal
+					SF.Sensor_Thermal(this.universalWindowManager,this.userInput, this.id, this.fov, this.sensitivity);
                     break;
                 case "acoustic":
                     // define sensor acoustic id with sensitivity sensitivity
@@ -350,7 +356,7 @@ public class Parser {
                     this.sensitivity = Double.parseDouble(this.words[6]);
                     System.out.println("Use CommandSensorDefineAcoustic");
                     System.out.println("Variables: ID: " + this.id + " Sensitivity: " + this.sensitivity);
-                    // TODO: Use CommandSensorDefineAcoustic
+					SF.Sensor_Acoustic(this.universalWindowManager, this.userInput, this.id, this.sensitivity);
                     break;
                 case "depth":
                     // define sensor depth id with trigger depth altitude
@@ -358,7 +364,7 @@ public class Parser {
                     this.altitude = Integer.parseInt(this.words[7]);
                     System.out.println("Use CommandSensorDefineDepth");
                     System.out.println("Variables: ID: " + this.id + " Depth: " + this.altitude);
-                    // TODO: Use CommandSensorDefineDepth
+					SF.Sensor_Depth(this.universalWindowManager, this.userInput, this.id, this.altitude);
                     break;
                 case "distance":
                     // define sensor distance id with trigger distance distance
@@ -366,7 +372,7 @@ public class Parser {
                     this.distance = Integer.parseInt(this.words[7]);
                     System.out.println("Use CommandSensorDefineDistance");
                     System.out.println("Variables: ID: " + this.id + " Distance: " + this.distance);
-                    // TODO: Use CommandSensorDefineDistance
+					  SF.Sensor_Distance(this.universalWindowManager, this.userInput, this.id, this.distance);
                     break;
                 case "time":
                     // define sensor time id with trigger time time
@@ -374,9 +380,8 @@ public class Parser {
                     this.time = Double.parseDouble(this.words[7]);
                     System.out.println("Use CommandSensorDefineTime");
                     System.out.println("Variables: ID: " + this.id + " Time: " + this.time);
-                    // TODO: Use CommandSensorDefineTime
+					 SF.Sensor_Time(this.universalWindowManager, this.userInput, this.id, this.time);
                     break;
-
             }
             if (this.words[3].equals("active")) {
                 // define sensor sonar active id with power power sensitivity sensitivity
@@ -386,7 +391,7 @@ public class Parser {
                 System.out.println("Use CommandSensorDefineSonarActive");
                 System.out.println("Variables: ID: " + this.id + " Power: " +
                         this.power + " Sensitivity: " + this.sensitivity);
-                // TODO: Use CommandSensorDefineSonarActive
+				SF.Sensor_SonarActive(this.universalWindowManager, this.userInput, this.id, this.power, this.sensitivity);
             }
             else if (this.words[3].equals("passive")) {
                 // define sensor sonar passive id with sensitivity sensitivity
@@ -394,7 +399,7 @@ public class Parser {
                 this.sensitivity = Double.parseDouble(this.words[7]);
                 System.out.println("Use CommandSensorDefineSonarPassive");
                 System.out.println("Variables: ID: " + this.id + " Sensitivity: " + this.sensitivity);
-                // TODO: Use CommandSensorDefineSonarPassive
+				SF.Sensor_SonarPassive(this.universalWindowManager,this.userInput,this.id,this.sensitivity);
             }
         }
     }
@@ -406,48 +411,46 @@ public class Parser {
                 case "@load":
                     // @load filename
                     this.fileName = this.words[1];
-                    System.out.println("Use CommandMiscLoad");
-                    System.out.println("Variables: Filename: " + this.fileName);
-                    // TODO: Use CommandMiscLoad
+                    Misc myMiscLoad = new Misc();
+                    myMiscLoad.load(universalWindowManager, this.userInput, this.fileName);
                     break;
                 case "@pause":
-                    // @pause
-                    System.out.println("Use CommandMiscPause");
-                    // TODO: Use CommandMiscPause
+                    Misc myMiscPause = new Misc();
+                    myMiscPause.pause(universalWindowManager, this.userInput);
                     break;
                 case "@resume":
-                    // @resume
-                    System.out.println("Use CommandMiscResume");
-                    // TODO: Use CommandMiscResume
+                    Misc myMiscResume = new Misc();
+                    myMiscResume.resume(universalWindowManager, this.userInput);
                     break;
                 case "@set":
-                    // @set update time
-                    this.time = Double.parseDouble(this.words[2]);
-                    System.out.println("Use CommandMiscSetUpdate");
-                    System.out.println("Variables: Time: " + this.time);
-                    // TODO: Use CommandMiscSetUpdate
+                    double secondsSet = Double.parseDouble(this.words[2]);
+                    Time myTimeSet = new Time(secondsSet);
+                    Misc myMiscSet = new Misc();
+                    myMiscSet.setUpdateTime(universalWindowManager, this.userInput, myTimeSet);
                     break;
                 case "@wait":
                     // @wait time
-                    this.time = Double.parseDouble(this.words[1]);
-                    System.out.println("Use CommandMiscWait");
-                    // TODO: Use CommandMiscWait
+                    double secondsWait = Double.parseDouble(this.words[1]);
+                    Time myTimeWait = new Time(secondsWait);
+                    Misc myMiscWait = new Misc();
+                    myMiscWait.waitTime(universalWindowManager, this.userInput, myTimeWait);
                     break;
                 case "@force":
-                    // @force id state to coordinates with course course speed speed
+                    Actors a = new Actors();
+                    Misc myMiscForce = new Misc();
+                    //catching
                     this.id = this.words[1];
-                    this.coordinates = Integer.parseInt(this.words[4]);
+                    String coordinateValues = this.words[4];
                     this.course = Integer.parseInt(this.words[7]);
                     this.speed = Integer.parseInt(this.words[9]);
-                    System.out.println("Use CommandActorSetState");
-                    System.out.println("Variables: ID: " + this.id + " Coordinates: " +
-                            this.coordinates + " Course: " + this.course + " Speed: " + this.speed);
-                    // TODO: Use CommandActorSetState.
+                    //converting variables
+                    CoordinateWorld3D cordinate = a.parseActorsCoordinates(coordinateValues);
+                    //executing
+                    myMiscForce.force(universalWindowManager,this.userInput, new AgentID(this.id), cordinate, new Course(this.course), new Groundspeed(this.speed));
                     break;
                 case "@exit":
-                    // @exit
-                    System.out.println("Use CommandMiscExit");
-                    // TODO: Use CommandMiscExit
+                    Misc myMiscExit= new Misc();
+                    myMiscExit.exit(universalWindowManager, this.userInput);
                     break;
             }
         }
@@ -524,10 +527,4 @@ public class Parser {
         keyWords.add("window");
         keyWords.add("with");
     }
-
-//-----------------------------------Separate Class Launching Methods---------------------------//
-
-//-----------------------------------Separate Command Parsing Methods---------------------------//
-
-
 }
