@@ -27,7 +27,6 @@ Set id4 speed 55
 set id altitude 888
 set id depth 1661
 
-
 // III. MUNITIONS
 // 1. define munition bomb id
 define munition bomb id1
