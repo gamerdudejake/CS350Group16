@@ -5,9 +5,17 @@ import cs350s21project.controller.command.actor.CommandActorDefineShip;
 import cs350s21project.controller.command.actor.CommandActorSetAltitudeDepth;
 import cs350s21project.controller.command.actor.CommandActorSetCourse;
 import cs350s21project.datatype.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Actors {
+
+    public static void main(String[] args)
+    {
+        Actors ref = new Actors();
+        ref.parseActorsCoordinats("49*39'31#/117*25'34#/0");
+    }
 
     public void defineShip(CommandManagers managers, String text, AgentID idActor, List<AgentID> idMunitions)
     {
@@ -40,15 +48,56 @@ public class Actors {
     }
 
     //------Misc----------
-    //before creating a new coordinateWorld3D we need to create coordinate world object.
-    public void createCoordinateWorld3D(CoordinateWorld coordinateWorld, Altitude altitude)
+
+    public Course createCourse(double input)
     {
-        CoordinateWorld3D newCorWorld = new CoordinateWorld3D(coordinateWorld, altitude);
+        return new Course(input);
+    }
+
+    public Groundspeed createGroundSpeed(double input)
+    {
+        return new Groundspeed(input);
+    }
+
+    //before creating a new coordinateWorld3D we need to create coordinate world object.
+    public CoordinateWorld3D createCoordinateWorld3D(CoordinateWorld coordinateWorld, Altitude altitude)
+    {
+        return new CoordinateWorld3D(coordinateWorld, altitude);
     }
 
     //requires a Latitude object and a Longitude object.
     public CoordinateWorld createCoordinateWorldObj(Latitude latitude, Longitude longitude)
     {
         return new CoordinateWorld(latitude, longitude);
+    }
+
+    public ArrayList<AgentID> stringListToMunitionsList(ArrayList<String> munitions)
+    {
+        ArrayList<AgentID> target = new ArrayList<>();
+
+        for(int i =0; i < munitions.size(); i++)
+        {
+            View view = new View();
+            target.add(view.createNewAgentID(munitions.get(i)));
+        }
+
+        return target;
+    }
+
+    public CoordinateWorld3D parseActorsCoordinats(String input)
+    {
+
+        String[] coordinates = input.split("/");
+        System.out.println("The size of coordinates is : " + coordinates.length);
+
+        View view = new View();
+
+        Latitude latitude = view.parseLatitudeString(coordinates[0]);
+        Longitude longitude = view.parseLongitudeString(coordinates[1]);
+        Altitude altitude = new Altitude(Double.parseDouble(coordinates[2]));
+
+        System.out.println(latitude.toString() + " " + longitude.toString() + " " + altitude.toString());
+
+        return new CoordinateWorld3D(createCoordinateWorldObj(latitude, longitude), altitude);
     }
 }
