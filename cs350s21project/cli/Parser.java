@@ -321,6 +321,7 @@ public class Parser {
 
     public void sensorsFuzes() {
         // IV. SENSORS/FUZES
+		SensorsAndFuses SF = new SensorsAndFuses();
         if (this.words[1].equals("sensor")) {
             switch(this.words[2]) {
                 case "radar":
@@ -333,6 +334,7 @@ public class Parser {
                     System.out.println("Variables: ID: " + this.id + " FOV: " + this.fov + " Power: " +
                             this.power + " Sensitivity: " + this.sensitivity);
                     // TODO: Use CommandSensorDefineRadar
+					SF.Sensor_Radar(this.universalWindowManager,this.userInput,this.id,this.fov,this.power,this.sensitivity);
                     break;
                 case "thermal":
                     // define sensor thermal id with field of view fov sensitivity sensitivity
@@ -343,6 +345,7 @@ public class Parser {
                     System.out.println("Variables: ID: " + this.id + " FOV: " + this.fov +
                             " Sensitivity: " + this.sensitivity);
                     // TODO: Use CommandSensorDefineThermal
+					SF.Sensor_Thermal(this.universalWindowManager,this.userInput, this.id, this.fov, this.sensitivity);
                     break;
                 case "acoustic":
                     // define sensor acoustic id with sensitivity sensitivity
@@ -351,6 +354,7 @@ public class Parser {
                     System.out.println("Use CommandSensorDefineAcoustic");
                     System.out.println("Variables: ID: " + this.id + " Sensitivity: " + this.sensitivity);
                     // TODO: Use CommandSensorDefineAcoustic
+					SF.Sensor_Acoustic(this.universalWindowManager, this.userInput, this.id, this.sensitivity);
                     break;
                 case "depth":
                     // define sensor depth id with trigger depth altitude
@@ -359,6 +363,7 @@ public class Parser {
                     System.out.println("Use CommandSensorDefineDepth");
                     System.out.println("Variables: ID: " + this.id + " Depth: " + this.altitude);
                     // TODO: Use CommandSensorDefineDepth
+					SF.Sensor_Depth(this.universalWindowManager, this.userInput, this.id, this.altitude);
                     break;
                 case "distance":
                     // define sensor distance id with trigger distance distance
@@ -367,6 +372,7 @@ public class Parser {
                     System.out.println("Use CommandSensorDefineDistance");
                     System.out.println("Variables: ID: " + this.id + " Distance: " + this.distance);
                     // TODO: Use CommandSensorDefineDistance
+					  SF.Sensor_Distance(this.universalWindowManager, this.userInput, this.id, this.distance);
                     break;
                 case "time":
                     // define sensor time id with trigger time time
@@ -375,6 +381,7 @@ public class Parser {
                     System.out.println("Use CommandSensorDefineTime");
                     System.out.println("Variables: ID: " + this.id + " Time: " + this.time);
                     // TODO: Use CommandSensorDefineTime
+					 SF.Sensor_Time(this.universalWindowManager, this.userInput, this.id, this.time);
                     break;
 
             }
@@ -387,6 +394,7 @@ public class Parser {
                 System.out.println("Variables: ID: " + this.id + " Power: " +
                         this.power + " Sensitivity: " + this.sensitivity);
                 // TODO: Use CommandSensorDefineSonarActive
+				SF.Sensor_SonarActive(this.universalWindowManager, this.userInput, this.id, this.power, this.sensitivity);
             }
             else if (this.words[3].equals("passive")) {
                 // define sensor sonar passive id with sensitivity sensitivity
@@ -395,6 +403,7 @@ public class Parser {
                 System.out.println("Use CommandSensorDefineSonarPassive");
                 System.out.println("Variables: ID: " + this.id + " Sensitivity: " + this.sensitivity);
                 // TODO: Use CommandSensorDefineSonarPassive
+				SF.Sensor_SonarPassive(this.universalWindowManager,this.userInput,this.id,this.sensitivity);
             }
         }
     }
