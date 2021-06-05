@@ -3,12 +3,7 @@ import cs350s21project.controller.CommandManagers;
 import cs350s21project.controller.command.sensor.*;
 import cs350s21project.datatype.*;
 public class SensorsAndFuses {
-	//ALL commands start by taking a CommandManagers field, followed by a string of Text of the Command that 
-	//The user typed. 
-	//CommandManagers is always referred to as CM, and the command text is always refered to as "text"
 	
-	//The input is displayed for each and involves CommandMangers,Strings,and doubles. AgentIDs are inputted as Strings.
-	// 
 	// (CM,String Commandtext,String IDSensor,double fov,double power,double sensitivity)
 	public void Sensor_Radar(CommandManagers CM, String text, String IDSensor, double fov, double power, double sensitivity)
 	{
