@@ -1,18 +1,16 @@
-//ignore any package warnings from your IDE
-//it works please do not touch I'm going to add it to every file.
 package cs350s21project.cli;
 import cs350s21project.controller.CommandManagers;
 import cs350s21project.controller.command.A_Command;
 
 public class CommandInterpreter {
+    /*the application does not take in input from the command line.
+     instead the string is a place holder so it can take in and replace input string to whatever is passed into
+     the application. */
     public static void main(String[] args) {
         CommandInterpreter CmdInterpreter = new CommandInterpreter();
         CmdInterpreter.evaluate("run");
     }
 
-    //when the input is passed in it will then launch the Commands console
-    //Each new Command that is passed in will be entered into the body of the
-    //evaluate and if the input is equal to the conditions of exectue then it will launch.
     public void evaluate (String input)
     {
         if(input == null || input.isEmpty()){
