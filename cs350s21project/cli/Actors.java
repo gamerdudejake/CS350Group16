@@ -80,17 +80,13 @@ public class Actors {
 
     public CoordinateWorld3D parseActorsCoordinates(String input)
     {
-
         String[] coordinates = input.split("/");
-        System.out.println("The size of coordinates is : " + coordinates.length);
 
         View view = new View();
 
         Latitude latitude = view.parseLatitudeString(coordinates[0]);
         Longitude longitude = view.parseLongitudeString(coordinates[1]);
         Altitude altitude = new Altitude(Double.parseDouble(coordinates[2]));
-
-        System.out.println(latitude.toString() + " " + longitude.toString() + " " + altitude.toString());
 
         return new CoordinateWorld3D(createCoordinateWorldObj(latitude, longitude), altitude);
     }

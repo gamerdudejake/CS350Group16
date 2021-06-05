@@ -19,7 +19,6 @@ public class View {
 
         //execute Window
         TopWindow.execute();
-        System.out.println("The buildTopView method has been invoked.");
     }
 
     public AgentID createNewAgentID(String id)
@@ -60,16 +59,16 @@ public class View {
                 min = true;
             }
 
-            else if(coordinatePreParse.charAt(i) != '#' && !sec && coordinatePreParse.charAt(i) != '(' && coordinatePreParse.charAt(i) != ')' )
+            else if(coordinatePreParse.charAt(i) != '#' && coordinatePreParse.charAt(i) != '\"' && !sec && coordinatePreParse.charAt(i) != '(' && coordinatePreParse.charAt(i) != ')')
             {
                 seconds.append(coordinatePreParse.charAt(i));
-            }else if(coordinatePreParse.charAt(i) == '#')
+            }else if(coordinatePreParse.charAt(i) == '#' || coordinatePreParse.charAt(i) == '\"')
             {
                 sec = true;
             }
         }
 
-        int convSec = Integer.parseInt(seconds.toString());
+        double convSec = Double.parseDouble(seconds.toString());
         Longitude newLongitude = new Longitude(Integer.parseInt(degrees.toString()),Integer.parseInt(minutes.toString()), convSec);
 
         return newLongitude;
@@ -87,7 +86,6 @@ public class View {
 
         for(int i =0; i < coordinatePreParse.length(); i++)
         {
-
             if(coordinatePreParse.charAt(i) != '*' && !deg && coordinatePreParse.charAt(i) != '(' && coordinatePreParse.charAt(i) != ')')
             {
                 degrees.append(coordinatePreParse.charAt(i));
@@ -104,16 +102,16 @@ public class View {
                 min = true;
             }
 
-            else if(coordinatePreParse.charAt(i) != '#' && !sec && coordinatePreParse.charAt(i) != '(' && coordinatePreParse.charAt(i) != ')')
+            else if(coordinatePreParse.charAt(i) != '#' && coordinatePreParse.charAt(i) != '\"' && !sec && coordinatePreParse.charAt(i) != '(' && coordinatePreParse.charAt(i) != ')')
             {
                 seconds.append(coordinatePreParse.charAt(i));
-            }else if(coordinatePreParse.charAt(i) == '#')
+            }else if(coordinatePreParse.charAt(i) == '#' || coordinatePreParse.charAt(i) == '\"')
             {
                 sec = true;
             }
         }
 
-        int convSec = Integer.parseInt(seconds.toString());
+        double convSec = Double.parseDouble(seconds.toString());
         Latitude newLatitude = new Latitude(Integer.parseInt(degrees.toString()),Integer.parseInt(minutes.toString()), convSec);
 
         return newLatitude;

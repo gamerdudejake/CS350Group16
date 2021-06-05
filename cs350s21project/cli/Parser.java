@@ -87,9 +87,6 @@ public class Parser {
     }
 
     public void views() {
-        //Anything coordinate related must follow a format similar to the command below
-        //with each latitude or longitude coordinate ending in a pound sign.
-        //create window wTop top view with 200 (49*39'32# 0*10'0# 0*0'30#) (117*25'30# 0*10'0# 0*0'30#)
         // I. VIEWS
         if (this.words[1].equals("window")) {
             switch(this.words[0]) {
@@ -107,22 +104,16 @@ public class Parser {
                         Longitude longitude3 = newView.parseLongitudeString(words[12]);
 
                         newView.buildTopView(id, universalWindowManager, size, latitude1, latitude2, latitude3, longitude1, longitude2, longitude3);
-                        System.out.println("Top window set with attributes id:  " + id.toString() + "Size: " + size + " latitude1: " + latitude1.toString()+ " latitude2: " + latitude2.toString() + " latitude3: " + latitude3.toString() + " longitude1: " + longitude1.toString() + " longitude2: " + longitude2.toString() + " longitude3: " + longitude3.toString());
+                        System.out.println("Top window set with attributes id:  " + id.toString() + " Size: " + size + " latitude1: " + latitude1.toString()+ " latitude2: " + latitude2.toString() + " latitude3: " + latitude3.toString() + " longitude1: " + longitude1.toString() + " longitude2: " + longitude2.toString() + " longitude3: " + longitude3.toString());
                     }
                     break;
                 case "delete":
-                    // delete window id testing out the word catcher.
-                    String window = this.words[1];
-
                     View newView = new View();
                     AgentID id = newView.createNewAgentID(this.words[2]);
 
-                    //converting to params for the methods being invoked.
-                    String text = "The window with id: " + id.toString() + " has been deleted";
-
                     //invoking the delete method.
-                    newView.deleteWindow(id, text, this.universalWindowManager);
-                    System.out.println("The window "+id.toString()+" has been deleted.");
+                    newView.deleteWindow(id,this.userInput, this.universalWindowManager);
+                    System.out.println("The window " +id.toString() + " has been deleted.");
                     break;
             }
         }
@@ -138,7 +129,7 @@ public class Parser {
             AgentID ID = view.createNewAgentID(this.id);
             idNParse(5);
 
-            actor.defineShip(universalWindowManager, "ship", ID, actor.stringListToMunitionsList(this.idN));
+            actor.defineShip(universalWindowManager,this.userInput, ID, actor.stringListToMunitionsList(this.idN));
             System.out.println("The ship with id: " + ID.toString() + " has been defined");
         }
         else if (this.words[1].equals("actor")) {
@@ -153,7 +144,7 @@ public class Parser {
             double crse = Double.parseDouble(this.words[9]);
             double spd = Double.parseDouble(this.words[11]);
 
-            actor.createActor(universalWindowManager, "actor invoked", id1, id2, actor.parseActorsCoordinates(unparsedCor), actor.createCourse(crse), actor.createGroundSpeed(spd));
+            actor.createActor(universalWindowManager,this.userInput, id1, id2, actor.parseActorsCoordinates(unparsedCor), actor.createCourse(crse), actor.createGroundSpeed(spd));
             System.out.println("Create Actor has been successfully invoked.");
         }
         else if (this.words[0].equals("set") &&
@@ -169,7 +160,7 @@ public class Parser {
                     Course c = a.createCourse(crse);
                     AgentID Id = v.createNewAgentID(this.id);
 
-                    a.setCourseId(universalWindowManager, "set course id", Id, c);
+                    a.setCourseId(universalWindowManager,this.userInput, Id, c);
                     System.out.println("The set course command with id: " + Id.toString() + " course: " + c.toString() + " has been invoked." );
                     break;
                 case "speed":
@@ -181,7 +172,7 @@ public class Parser {
                     AgentID spId = v.createNewAgentID(this.id);
                     Course spCrs = a.createCourse(speed);
 
-                    a.setSpeedId(universalWindowManager, "speed changed", spId, spCrs);
+                    a.setSpeedId(universalWindowManager,this.userInput, spId, spCrs);
                     System.out.println("The set speed command with id: " + spId.toString() + " Course: " + spCrs.toString() + " has been invoked.");
                     break;
                 case "depth" :
@@ -194,7 +185,7 @@ public class Parser {
                     AgentID aId = v.createNewAgentID(this.id);
                     Altitude altitude = new Altitude(altitud);
 
-                    a.setAltitude(universalWindowManager, "altitude changed.", aId, altitude);
+                    a.setAltitude(universalWindowManager,this.userInput, aId, altitude);
                     System.out.println("The set altitude has with id: " + aId.toString() + " with altitude: " + altitude.toString() + " hase been invoked.") ;
                     break;
             }
@@ -211,7 +202,7 @@ public class Parser {
 
                     this.id = this.words[3];
 
-                    m.Define_Bomb(universalWindowManager, "Define_bomb invoked", this.id);
+                    m.Define_Bomb(universalWindowManager,this.userInput, this.id);
                     System.out.println("Define bomb with variables: ID: " + this.id + " has been invoked.");
                     break;
                 case "shell":
@@ -219,7 +210,7 @@ public class Parser {
 
                     this.id = this.words[3];
 
-                    m.Define_Shell(universalWindowManager, "Define_bomb invoked", this.id);
+                    m.Define_Shell(universalWindowManager,this.userInput, this.id);
                     System.out.println("Define munition with variables: ID: " + this.id + " has been invoked.");
                     break;
                 case "depth_charge":
@@ -229,7 +220,7 @@ public class Parser {
                     this.id2 = this.words[6];
 
                     System.out.println("define depth_charge with variables: ID: " + this.id + " ID2: " + this.id2 + " has been invoked.");
-                    m.DefineDepthCharge(universalWindowManager, "depth_charge invoked", this.id, this.id2);
+                    m.DefineDepthCharge(universalWindowManager,this.userInput,this.id, this.id2);
                     break;
                 case "torpedo":
                     m = new Munitions();
@@ -241,7 +232,7 @@ public class Parser {
 
                     System.out.println("The command define torpedo with variables: ID: " + this.id + " ID2: " + this.id2 + " ID3: " +
                             this.id3 + " Time: " + this.time + " has been invoked.");
-                    m.DefineTorpedo(universalWindowManager,"Torpedo invoked",this.id, this.id2, this.id3, this.time );
+                    m.DefineTorpedo(universalWindowManager,this.userInput,this.id, this.id2, this.id3, this.time );
                     break;
                 case "missile":
                     m = new Munitions();
@@ -253,7 +244,7 @@ public class Parser {
 
                     System.out.println("The command define missile with variables: ID: " + this.id + " ID2: " + this.id2 + " ID3: " +
                             this.id3 + " Distance: " + this.distance + " has been invoked.");
-                    m.DefineMissile(universalWindowManager, "missile invoked", this.id, this.id2, this.id3, this.distance);
+                    m.DefineMissile(universalWindowManager,this.userInput, this.id, this.id2, this.id3, this.distance);
                     break;
             }
             // set
@@ -264,17 +255,16 @@ public class Parser {
                 this.id2 = this.words[4];
 
                 System.out.println("The command set load with Variables: ID: " + this.id + " ID2: " + this.id2 + " has been invoked.");
-                m.LoadMunition(universalWindowManager, "munitions loaded" ,this.id, this.id2);
+                m.LoadMunition(universalWindowManager, this.userInput ,this.id, this.id2);
             }
             else if (this.words[2].equals("deploy") && this.words.length == 5) {
                 Munitions m = new Munitions();
                 // set id1 deploy munition id2
                 this.id = this.words[1];
                 this.id2 = this.words[4];
-                System.out.println("Use CommandActorDeployMunition");
-                System.out.println("Variables: ID: " + this.id + " ID2: " + this.id2);
-                m.DeployMunition(universalWindowManager, "deploy munition invoked.", this.id, this.id2);
-                // TODO: Use CommandActorDeployMunition
+
+                System.out.println("The command set deploy munitions with variables: ID: " + this.id + " ID2: " + this.id2 + " has been invoked.");
+                m.DeployMunition(universalWindowManager, this.userInput, this.id, this.id2);
             }
             else if (this.words[2].equals("deploy") && this.words.length > 5) {
                 Munitions m = new Munitions();
@@ -283,11 +273,10 @@ public class Parser {
                 this.id2 = this.words[4];
                 this.azimuth = Double.parseDouble(this.words[7]);
                 this.elevation = Double.parseDouble(this.words[9]);
-                System.out.println("Use CommandActorDeployMunitionShell");
-                System.out.println("Variables: ID: " + this.id + " ID2: " + this.id2 + " Azimuth: " +
-                        this.azimuth + " Elevation: " + this.elevation);
-                m.DeployMunitionShell(universalWindowManager, "Deploy munitions shell invoked.", this.id, this.id2, this.azimuth, this.elevation);
-                // TODO: Use CommandActorDeployMunitionShell
+
+                System.out.println("The command set deploy munitions with variables: ID: " + this.id + " ID2: " + this.id2 + " Azimuth: " +
+                        this.azimuth + " Elevation: " + this.elevation +" has been invoked.");
+                m.DeployMunitionShell(universalWindowManager, this.userInput, this.id, this.id2, this.azimuth, this.elevation);
             }
         }
     }
@@ -303,10 +292,8 @@ public class Parser {
                     this.fov = Double.parseDouble(this.words[8]);
                     this.power = Double.parseDouble(this.words[10]);
                     this.sensitivity = Double.parseDouble(this.words[12]);
-                    System.out.println("Use CommandSensorDefineRadar");
                     System.out.println("Variables: ID: " + this.id + " FOV: " + this.fov + " Power: " +
                             this.power + " Sensitivity: " + this.sensitivity);
-                    // TODO: Use CommandSensorDefineRadar
 					SF.Sensor_Radar(this.universalWindowManager,this.userInput,this.id,this.fov,this.power,this.sensitivity);
                     break;
                 case "thermal":
@@ -314,7 +301,6 @@ public class Parser {
                     this.id = this.words[3];
                     this.fov = Double.parseDouble(this.words[8]);
                     this.sensitivity = Double.parseDouble(this.words[10]);
-                    System.out.println("Use CommandSensorDefineRadar");
                     System.out.println("Variables: ID: " + this.id + " FOV: " + this.fov +
                             " Sensitivity: " + this.sensitivity);
 					SF.Sensor_Thermal(this.universalWindowManager,this.userInput, this.id, this.fov, this.sensitivity);
@@ -323,7 +309,6 @@ public class Parser {
                     // define sensor acoustic id with sensitivity sensitivity
                     this.id = this.words[3];
                     this.sensitivity = Double.parseDouble(this.words[6]);
-                    System.out.println("Use CommandSensorDefineAcoustic");
                     System.out.println("Variables: ID: " + this.id + " Sensitivity: " + this.sensitivity);
 					SF.Sensor_Acoustic(this.universalWindowManager, this.userInput, this.id, this.sensitivity);
                     break;
@@ -331,7 +316,6 @@ public class Parser {
                     // define sensor depth id with trigger depth altitude
                     this.id = this.words[3];
                     this.altitude = Integer.parseInt(this.words[7]);
-                    System.out.println("Use CommandSensorDefineDepth");
                     System.out.println("Variables: ID: " + this.id + " Depth: " + this.altitude);
 					SF.Sensor_Depth(this.universalWindowManager, this.userInput, this.id, this.altitude);
                     break;
@@ -339,7 +323,6 @@ public class Parser {
                     // define sensor distance id with trigger distance distance
                     this.id = this.words[3];
                     this.distance = Integer.parseInt(this.words[7]);
-                    System.out.println("Use CommandSensorDefineDistance");
                     System.out.println("Variables: ID: " + this.id + " Distance: " + this.distance);
 					  SF.Sensor_Distance(this.universalWindowManager, this.userInput, this.id, this.distance);
                     break;
@@ -347,7 +330,6 @@ public class Parser {
                     // define sensor time id with trigger time time
                     this.id = this.words[3];
                     this.time = Double.parseDouble(this.words[7]);
-                    System.out.println("Use CommandSensorDefineTime");
                     System.out.println("Variables: ID: " + this.id + " Time: " + this.time);
 					 SF.Sensor_Time(this.universalWindowManager, this.userInput, this.id, this.time);
                     break;
@@ -357,16 +339,13 @@ public class Parser {
                 this.id = this.words[4];
                 this.power = Double.parseDouble(this.words[7]);
                 this.sensitivity = Double.parseDouble(this.words[9]);
-                System.out.println("Use CommandSensorDefineSonarActive");
                 System.out.println("Variables: ID: " + this.id + " Power: " +
                         this.power + " Sensitivity: " + this.sensitivity);
 				SF.Sensor_SonarActive(this.universalWindowManager, this.userInput, this.id, this.power, this.sensitivity);
             }
             else if (this.words[3].equals("passive")) {
-                // define sensor sonar passive id with sensitivity sensitivity
                 this.id = this.words[4];
                 this.sensitivity = Double.parseDouble(this.words[7]);
-                System.out.println("Use CommandSensorDefineSonarPassive");
                 System.out.println("Variables: ID: " + this.id + " Sensitivity: " + this.sensitivity);
 				SF.Sensor_SonarPassive(this.universalWindowManager,this.userInput,this.id,this.sensitivity);
             }
@@ -378,7 +357,6 @@ public class Parser {
         if (this.words[0].charAt(0) == '@'){
             switch(this.words[0]) {
                 case "@load":
-                    // @load filename
                     this.fileName = this.words[1];
                     Misc myMiscLoad = new Misc();
                     myMiscLoad.load(universalWindowManager, this.userInput, this.fileName);
@@ -398,7 +376,6 @@ public class Parser {
                     myMiscSet.setUpdateTime(universalWindowManager, this.userInput, myTimeSet);
                     break;
                 case "@wait":
-                    // @wait time
                     double secondsWait = Double.parseDouble(this.words[1]);
                     Time myTimeWait = new Time(secondsWait);
                     Misc myMiscWait = new Misc();
@@ -407,14 +384,11 @@ public class Parser {
                 case "@force":
                     Actors a = new Actors();
                     Misc myMiscForce = new Misc();
-                    //catching
                     this.id = this.words[1];
                     String coordinateValues = this.words[4];
                     this.course = Integer.parseInt(this.words[7]);
                     this.speed = Integer.parseInt(this.words[9]);
-                    //converting variables
                     CoordinateWorld3D cordinate = a.parseActorsCoordinates(coordinateValues);
-                    //executing
                     myMiscForce.force(universalWindowManager,this.userInput, new AgentID(this.id), cordinate, new Course(this.course), new Groundspeed(this.speed));
                     break;
                 case "@exit":
